@@ -145,6 +145,7 @@ export type TVillagerStarSign =
   | "Aquarius"
   | "Pisces";
 
+// TODO: more descriptive JSDoc
 export type IVillager = {
   /**
    * Villager's Nookipedia URL
@@ -229,6 +230,7 @@ export type IVillager = {
   appearances: TVillagerGame[];
 };
 export type IVillagerExcludeDetails = string;
+// TODO: more descriptive JSDoc
 export type IVillagerNHDetails = IVillager & {
   nh_details: {
     /**
