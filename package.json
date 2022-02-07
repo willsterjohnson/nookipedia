@@ -1,24 +1,37 @@
 {
   "name": "@willsterjohnson/nookipedia",
   "version": "0.1.0",
+  "description": "An unofficial JavaScript driver for the [Nookipedia API](https://api.nookipedia.com/).",
+  "license": "MIT",
+  "homepage": "https://github.com/willsterjohnson/nookipedia#readme",
   "scripts": {
-    "package": "svelte-kit package && tsc && npm run prettier:write",
     "prettier:check": "prettier --ignore-path .prettierignore --check --plugin-search-dir=. .",
-    "prettier:write": "prettier --ignore-path .prettierignore --write --plugin-search-dir=. ."
+    "prettier:write": "prettier --ignore-path .prettierignore --write --plugin-search-dir=. .",
+    "package": "svelte-kit package && npm run prettier:write"
   },
+  "": "Weird Dev Environment, right?",
   "devDependencies": {
     "@sveltejs/kit": "next",
     "@types/node": "^17.0.15",
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
-    "ts-node": "^10.4.0",
+    "svelte2tsx": "^0.5.2",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
   },
   "dependencies": {
-    "dotenv": "^16.0.0",
     "node-fetch": "^3.2.0"
   },
   "type": "module",
-  "license": "MIT"
+  "keywords": [
+    "nookipedia"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willsterjohnson/nookipedia.git"
+  },
+  "author": "Will 'Willster' Johnson",
+  "bugs": {
+    "url": "https://github.com/willsterjohnson/nookipedia/issues"
+  }
 }

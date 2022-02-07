@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import type { Response } from "node-fetch";
 import fetch from "node-fetch";
 import type {
@@ -9,7 +8,6 @@ import type {
   TVillagerFilterExcludeDetails,
   TVillagerFilterNHDetails,
 } from "./types/villagers";
-dotenv.config();
 
 export interface INookipedia {
   villagers<T extends TVillagerFilter>(
@@ -67,7 +65,9 @@ export default class Nookipedia implements INookipedia {
 
   public async villagers<
     T extends TVillagerFilter = TVillagerFilter,
-    ResponseType = T extends TVillagerFilterExcludeDetails // if { excludedetails: true } is passed...
+    // TODO: better explain this mess
+    // if { excludedetails: true } is passed...
+    ResponseType = T extends TVillagerFilterExcludeDetails
       ? // the return is string[]
         IVillagerExcludeDetails[]
       : // else if { nhdetails: true } is passed...

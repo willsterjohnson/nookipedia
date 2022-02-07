@@ -9,7 +9,7 @@ const config = {
     },
     package: {
       dir: "package",
-      emitTypes: false,
+      emitTypes: true,
       exports: (f) => !/^_|\/_|\.d\.ts$/.test(f),
       files: () => true,
     },
