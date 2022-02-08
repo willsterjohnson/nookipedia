@@ -20,22 +20,26 @@ NOOKIPEDIA_TOKEN=your-token-here
 ```
 
 ```js
-// index.js
-import dotenv from 'dotenv';
-import Nookipedia from '@willsterjohnson/nookipedia';
+/* index.js */
+// import this library's driver class
+import Nookipedia from "@willsterjohnson/nookipedia";
+// import and configure dotenv to use environment variables
+import dotenv from "dotenv";
 dotenv.config();
 
 const nookipedia = new Nookipedia(
   // pass in your API token to authenticate requests
-  process.env.NOOKIPEDIA_TOKEN,
-  // you may also specify an API version
-  apiVersion: "1.5.0",
-  // or change the base URL if you need to
-  baseURL: "https://api.nookipedia.com/",
+  process.env["NOOKIPEDIA_TOKEN"],
+  {
+    // you may also specify an API version
+    apiVersion: "1.5.0",
+    // or change the base URL if you need to
+    baseURL: "https://api.nookipedia.com/",
+  },
 );
 
 const everyVillager = await nookipedia.villagers();
-const Ribbot = await nookipedia.villager({ name: 'Ribbot' });
+const Ribbot = await nookipedia.villagers({ name: "Ribbot" });
 ```
 
 ## Addressing the Elephant in the Room...
