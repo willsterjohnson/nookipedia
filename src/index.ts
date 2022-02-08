@@ -63,20 +63,16 @@ export default class Nookipedia implements INookipedia {
     }
   }
 
-  public async villagers<
-    T extends TVillagerFilter = TVillagerFilter,
-    // TODO: better explain this mess
-    // if { excludedetails: true } is passed...
-    ResponseType = T extends TVillagerFilterExcludeDetails
-      ? // the return is string[]
-        IVillagerExcludeDetails[]
-      : // else if { nhdetails: true } is passed...
-      T extends TVillagerFilterNHDetails
-      ? // the return contains the nh_details filed
-        IVillagerNHDetails[]
-      : // else the result is standard data
-        IVillager[],
-  >(filters: T = <T>{}): Promise<ResponseType> {
-    return (await (await this.fetch("villagers?" + this.bodyToParams(filters))).json()) as ResponseType;
+  public async villagers(filters?: TVillagerFilter): Promise<IVillager[]>;
+  public async villagers(filters?: TVillagerFilterNHDetails): Promise<IVillagerNHDetails[]>;
+  public async villagers(filters?: TVillagerFilterExcludeDetails): Promise<IVillagerExcludeDetails[]>;
+  public async villagers(
+    filters?: TVillagerFilter | TVillagerFilterNHDetails | TVillagerFilterExcludeDetails,
+  ): Promise<(IVillager | IVillagerNHDetails | IVillagerExcludeDetails)[]> {
+    return (await (await this.fetch("villagers?" + this.bodyToParams(filters ?? {}))).json()) as (
+      | IVillager
+      | IVillagerNHDetails
+      | IVillagerExcludeDetails
+    )[];
   }
 }
