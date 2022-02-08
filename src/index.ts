@@ -1,5 +1,7 @@
 import type { Response } from "node-fetch";
 import fetch from "node-fetch";
+import type { IEndpointError } from "./types/endpointErrors";
+import type { MaybeArray } from "./types/utils";
 import type {
   IVillager,
   IVillagerExcludeDetails,
@@ -10,15 +12,12 @@ import type {
 } from "./types/villagers";
 
 export interface INookipedia {
-  villagers<T extends TVillagerFilter>(
-    filters?: T,
-  ): Promise<
-    T extends TVillagerFilterExcludeDetails
-      ? IVillagerExcludeDetails[]
-      : T extends TVillagerFilterNHDetails
-      ? IVillagerNHDetails[]
-      : IVillager[]
-  > | void;
+  checkErrors<T extends ReturnType<INookipedia[keyof Omit<INookipedia, "checkErrors">]>>(
+    apiResponse: T,
+  ): Promise<Exclude<T, IEndpointError>>;
+  villagers(
+    filters?: TVillagerFilter | TVillagerFilterNHDetails | TVillagerFilterExcludeDetails,
+  ): Promise<Array<IVillager | IVillagerNHDetails | IVillagerExcludeDetails> | IEndpointError>;
 }
 
 export default class Nookipedia implements INookipedia {
@@ -36,7 +35,7 @@ export default class Nookipedia implements INookipedia {
     });
   }
 
-  private bodyToParams(body: Record<string, string | number | boolean | (string | number | boolean)[]>): string {
+  private bodyToParams(body: Record<string, MaybeArray<string | number | boolean>>): string {
     return Object.keys(body)
       .map((key) => {
         const value = body[key] as typeof body[keyof typeof body];
@@ -63,16 +62,26 @@ export default class Nookipedia implements INookipedia {
     }
   }
 
-  public async villagers(filters?: TVillagerFilter): Promise<IVillager[]>;
-  public async villagers(filters?: TVillagerFilterNHDetails): Promise<IVillagerNHDetails[]>;
-  public async villagers(filters?: TVillagerFilterExcludeDetails): Promise<IVillagerExcludeDetails[]>;
+  public async checkErrors<T extends ReturnType<INookipedia[keyof Omit<INookipedia, "checkErrors">]>>(
+    apiResponse: T,
+  ): Promise<Exclude<T, IEndpointError>> {
+    const out = await apiResponse;
+    if (!Array.isArray(out)) {
+      throw new Error(out.title + ": " + out.details);
+    } else {
+      return out;
+    }
+  }
+
+  public async villagers(filters?: TVillagerFilter): Promise<Array<IVillager> | IEndpointError>;
+  public async villagers(filters?: TVillagerFilterNHDetails): Promise<Array<IVillagerNHDetails> | IEndpointError>;
+  public async villagers(filters?: TVillagerFilterExcludeDetails): Promise<Array<IVillagerExcludeDetails> | IEndpointError>;
   public async villagers(
     filters?: TVillagerFilter | TVillagerFilterNHDetails | TVillagerFilterExcludeDetails,
-  ): Promise<(IVillager | IVillagerNHDetails | IVillagerExcludeDetails)[]> {
-    return (await (await this.fetch("villagers?" + this.bodyToParams(filters ?? {}))).json()) as (
-      | IVillager
-      | IVillagerNHDetails
-      | IVillagerExcludeDetails
-    )[];
+  ): Promise<Array<IVillager | IVillagerNHDetails | IVillagerExcludeDetails> | IEndpointError> {
+    const endpoint = "villagers?" + this.bodyToParams(filters ?? {});
+    const response = await this.fetch(endpoint);
+    const data = (await response.json()) as Array<IVillager | IVillagerNHDetails | IVillagerExcludeDetails> | IEndpointError;
+    return data;
   }
 }
