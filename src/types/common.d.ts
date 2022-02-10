@@ -1,22 +1,56 @@
-export type TMonthShortformLower = "jan" | "feb" | "mar" | "apr" | "may" | "jun" | "jul" | "aug" | "sep" | "oct" | "nov" | "dec";
-export type TMonthShortformUpper = Capitalize<TMonthShortformLower>;
-export type TMonthShortform = TMonthShortformLower | TMonthShortformUpper;
-export type TMonthLongformLower =
-  | "january"
-  | "february"
-  | "march"
-  | "april"
+export type TMonthShortform =
+  | "Jan"
+  | "jan"
+  | "Feb"
+  | "feb"
+  | "Mar"
+  | "mar"
+  | "Apr"
+  | "apr"
+  | "May"
   | "may"
+  | "Jun"
+  | "jun"
+  | "Jul"
+  | "jul"
+  | "Aug"
+  | "aug"
+  | "Sep"
+  | "sep"
+  | "Oct"
+  | "oct"
+  | "Nov"
+  | "nov"
+  | "Dec"
+  | "dec";
+
+export type TMonthLongform =
+  | "January"
+  | "january"
+  | "February"
+  | "february"
+  | "March"
+  | "march"
+  | "April"
+  | "april"
+  | "May"
+  | "may"
+  | "June"
   | "june"
+  | "July"
   | "july"
+  | "August"
   | "august"
+  | "September"
   | "september"
+  | "October"
   | "october"
+  | "November"
   | "november"
+  | "December"
   | "december";
-export type TMonthLongformUpper = Capitalize<TMonthLongformLower>;
-export type TMonthLongform = TMonthLongformLower | TMonthLongformUpper;
-export type TMonthNumOrNumString =
+
+export type TMonthNumericForm =
   | 1
   | "1"
   | "01"
@@ -50,7 +84,8 @@ export type TMonthNumOrNumString =
   | "11"
   | 12
   | "12";
-export type TValidMonth = TMonthShortform | TMonthLongform | TMonthNumOrNumString;
+
+export type TValidMonth = TMonthShortform | TMonthLongform | TMonthNumericForm;
 
 /** TODO: complete this type */
 export type TRarityLevel = string | "Common" | "Uncommon";

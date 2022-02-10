@@ -1,93 +1,187 @@
 import type { TValidMonth } from "./common";
 
 export type TVillagerSpecies =
+  | "Alligator"
   | "alligator"
+  | "Anteater"
   | "anteater"
+  | "Bear"
   | "bear"
+  | "Bird"
   | "bird"
+  | "Bull"
   | "bull"
+  | "Cat"
   | "cat"
+  | "Cub"
   | "cub"
+  | "Chicken"
   | "chicken"
+  | "Cow"
   | "cow"
+  | "Deer"
   | "deer"
+  | "Dog"
   | "dog"
+  | "Duck"
   | "duck"
+  | "Eagle"
   | "eagle"
+  | "Elephant"
   | "elephant"
+  | "Frog"
   | "frog"
+  | "Goat"
   | "goat"
+  | "Gorilla"
   | "gorilla"
+  | "Hamster"
   | "hamster"
+  | "Hippo"
   | "hippo"
+  | "Horse"
   | "horse"
+  | "Koala"
   | "koala"
+  | "Kangaroo"
   | "kangaroo"
+  | "Lion"
   | "lion"
+  | "Monkey"
   | "monkey"
+  | "Mouse"
   | "mouse"
+  | "Octopus"
   | "octopus"
+  | "Ostrich"
   | "ostrich"
+  | "Penguin"
   | "penguin"
+  | "Pig"
   | "pig"
+  | "Rabbit"
   | "rabbit"
+  | "Rhino"
   | "rhino"
+  | "Sheep"
   | "sheep"
+  | "Squirrel"
   | "squirrel"
+  | "Tiger"
   | "tiger"
+  | "Wolf"
   | "wolf";
 
 // TODO: full names permitted and translated to identifiers
 export type TVillagerGame = "DNM" | "AC" | "E_PLUS" | "WW" | "CF" | "NL" | "WA" | "NH" | "FILM" | "HHD" | "PC";
 
-export type TVillagerPersonality = "lazy" | "jock" | "cranky" | "smug" | "normal" | "peppy" | "snooty" | "sisterly";
+export type TVillagerPersonality =
+  | "Lazy"
+  | "lazy"
+  | "Jock"
+  | "jock"
+  | "Cranky"
+  | "cranky"
+  | "Smug"
+  | "smug"
+  | "Normal"
+  | "normal"
+  | "Peppy"
+  | "peppy"
+  | "Snooty"
+  | "snooty"
+  | "Sisterly"
+  | "sisterly";
 
 export type TVillagerBirthday =
+  | "1"
   | 1
+  | "2"
   | 2
+  | "3"
   | 3
+  | "4"
   | 4
+  | "5"
   | 5
+  | "6"
   | 6
+  | "7"
   | 7
+  | "8"
   | 8
+  | "9"
   | 9
+  | "10"
   | 10
+  | "11"
   | 11
+  | "12"
   | 12
+  | "13"
   | 13
+  | "14"
   | 14
+  | "15"
   | 15
+  | "16"
   | 16
+  | "17"
   | 17
+  | "18"
   | 18
+  | "19"
   | 19
+  | "20"
   | 20
+  | "21"
   | 21
+  | "22"
   | 22
+  | "23"
   | 23
+  | "24"
   | 24
+  | "25"
   | 25
+  | "26"
   | 26
+  | "27"
   | 27
+  | "28"
   | 28
+  | "29"
   | 29
+  | "30"
   | 30
+  | "31"
   | 31;
 
 export type TVillagerStarSign =
   | "Aries"
+  | "aries"
   | "Taurus"
+  | "taurus"
   | "Gemini"
+  | "gemini"
   | "Cancer"
+  | "cancer"
   | "Leo"
+  | "leo"
   | "Virgo"
+  | "virgo"
   | "Libra"
+  | "libra"
   | "Scorpio"
+  | "scorpio"
   | "Sagittarius"
+  | "sagittarius"
   | "Capricorn"
+  | "capricorn"
   | "Aquarius"
-  | "Pisces";
+  | "aquarius"
+  | "Pisces"
+  | "pisces";
 
 // TODO: more descriptive JSDoc
 export type IVillager = {
@@ -155,7 +249,7 @@ export type IVillager = {
   /**
    * Villager's previous catchphrases
    */
-  prev_phrases: string[];
+  prev_phrases: Array<string>;
   /**
    * Villager's clothing
    */
@@ -171,9 +265,11 @@ export type IVillager = {
   /**
    * Villager's games appeared in
    */
-  appearances: TVillagerGame[];
+  appearances: Array<TVillagerGame>;
 };
+
 export type IVillagerExcludeDetails = string;
+
 // TODO: more descriptive JSDoc
 export type IVillagerNHDetails = IVillager & {
   nh_details: {
@@ -212,11 +308,11 @@ export type IVillagerNHDetails = IVillager & {
     /**
      * New Horizons - Favorite styles
      */
-    fav_styles: string[];
+    fav_styles: Array<string>;
     /**
      * New Horizons - Favorite colors
      */
-    fav_colors: string[];
+    fav_colors: Array<string>;
     /**
      * New Horizons - Hobby
      */
@@ -273,7 +369,7 @@ export type TVillagerFilter = {
    *
    * For example, if you want only villagers that appear in both New Horizons and Pocket Camp, you would send in `["NH", "PC"]`.
    */
-  game?: TVillagerGame | TVillagerGame[];
+  game?: TVillagerGame | Array<TVillagerGame>;
   /**
    * Retrieve villagers born in a specific month.
    *
@@ -294,6 +390,7 @@ export type TVillagerFilter = {
    */
   thumbsize?: number;
 };
+
 export type TVillagerFilterExcludeDetails = TVillagerFilter & {
   /**
    * Retrive New Horizons info.
@@ -310,6 +407,7 @@ export type TVillagerFilterExcludeDetails = TVillagerFilter & {
    */
   excludedetails: true;
 };
+
 export type TVillagerFilterNHDetails = TVillagerFilter & {
   /**
    * Retrive New Horizons info.
