@@ -1,6 +1,7 @@
 import type { Response } from "node-fetch";
 import fetch from "node-fetch";
 import type { IEndpointError } from "./types/endpointErrors";
+import type { IFish, TFishFilterMany, TFishFilterSingle } from "./types/fish";
 import type { MaybeArray } from "./types/utils";
 import type {
   IVillager,
@@ -18,6 +19,7 @@ export interface INookipedia {
   villagers(
     filters?: TVillagerFilter | TVillagerFilterNHDetails | TVillagerFilterExcludeDetails,
   ): Promise<Array<IVillager | IVillagerNHDetails | IVillagerExcludeDetails> | IEndpointError>;
+  fish(filters?: TFishFilterSingle | TFishFilterMany): Promise<Array<IFish> | IFish | IEndpointError>;
 }
 
 export default class Nookipedia implements INookipedia {
@@ -40,7 +42,7 @@ export default class Nookipedia implements INookipedia {
       .map((key) => {
         const value = body[key] as typeof body[keyof typeof body];
         if (Array.isArray(value)) {
-          return value.map((item) => `${key}=${item}`).join("&");
+          return value.map((item) => `${key}=${encodeURIComponent(item)}`).join("&");
         } else {
           return `${key}=${value}`;
         }
@@ -66,7 +68,7 @@ export default class Nookipedia implements INookipedia {
     apiResponse: T,
   ): Promise<Exclude<T, IEndpointError>> {
     const out = await apiResponse;
-    if (!Array.isArray(out)) {
+    if ("title" in out) {
       throw new Error(out.title + ": " + out.details);
     } else {
       return out;
@@ -82,6 +84,16 @@ export default class Nookipedia implements INookipedia {
     const endpoint = "villagers?" + this.bodyToParams(filters ?? {});
     const response = await this.fetch(endpoint);
     const data = (await response.json()) as Array<IVillager | IVillagerNHDetails | IVillagerExcludeDetails> | IEndpointError;
+    return data;
+  }
+
+  public async fish(filters: TFishFilterSingle): Promise<IFish | IEndpointError>;
+  public async fish(filters?: TFishFilterMany): Promise<Array<IFish> | IEndpointError>;
+  public async fish(filters?: TFishFilterSingle | TFishFilterMany): Promise<Array<IFish> | IFish | IEndpointError> {
+    console.log(`/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?`);
+    const endpoint = `/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?` + this.bodyToParams(filters ?? {});
+    const response = await this.fetch(endpoint);
+    const data = (await response.json()) as Array<IFish> | IFish | IEndpointError;
     return data;
   }
 }
