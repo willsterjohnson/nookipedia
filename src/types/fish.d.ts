@@ -1,10 +1,12 @@
-import type { TMonthShortform, TMonthShortformUpper, TRarityLevel } from "./common";
+import type { TMonthShortform, TRarityLevel, TValidMonth } from "./common";
 
+// TODO: review this type
 /** @example "4 PM – 9 AM" */
 export type TFishAppearanceTime = "NA" | "All day" | `${number} ${"AM" | "PM"} - ${number} ${"AM" | "PM"}`;
 
+// TODO: limit this to only viable options, eg don't permit "Feb - Jan"
 /** @example "Sep – Dec" */
-export type TFishMonths = `${TMonthShortformUpper} - ${TMonthShortformUpper}`;
+export type TFishMonths = `${TMonthShortform} - ${TMonthShortform}`;
 
 export type TFishHemisphereInfo = {
   /**
@@ -30,7 +32,6 @@ export type TFishHemisphereInfo = {
    */
   months_array: Array<number>;
 };
-
 
 // @dev hm yes, funny name
 export type IFish = {
@@ -102,4 +103,53 @@ export type IFish = {
    * Info about the fish's appearance through the year (South Hemisphere).
    */
   south: TFishHemisphereInfo;
+};
+
+export type IVillagerExcludeDetails = string;
+
+export type TFishFilterSingle = {
+  /**
+   * The name of the fish you wish to retrieve information about.
+   */
+  fish: string;
+  /**
+   * Specify the desired width of returned image URLs.
+   *
+   * When unspecified, the linked image(s) returned by the API will be full-resolution.
+   * Note that images can only be reduced in size; specifying a width greater than than the maximum
+   * size will return the default full-size image URL. Note that requesting specific image sizes
+   * for long lists may result in a very long response time.
+   */
+  thumbsize?: string;
+};
+
+export type TFishFilterMany = {
+  /**
+   * Specify the desired width of returned image URLs.
+   *
+   * When unspecified, the linked image(s) returned by the API will be full-resolution.
+   * Note that images can only be reduced in size; specifying a width greater than than the maximum
+   * size will return the default full-size image URL. Note that requesting specific image sizes
+   * for long lists may result in a very long response time.
+   */
+  thumbsize?: string;
+  /**
+   * Exclude information.
+   *
+   * When set to true, only fish names are returned.
+   * Instead of an array of objects with all details, the return will be an array of strings.
+   */
+  excludedetails?: boolean;
+  /**
+   * Retrive only the fish that are available in a specific month.
+   *
+   * Value may be the month's name (jan, january) or the integer representing the month (01, 1).
+   *
+   * When current is specified, the return body will be an object with two arrays inside,
+   * one called north and the other south containing the fish available in each respective hemisphere.
+   *
+   * Note that the current month is calculated based off the API server's time,
+   * so it may be slightly off for you at the beginning or end of the month.
+   */
+  month?: TValidMonth | "current";
 };
