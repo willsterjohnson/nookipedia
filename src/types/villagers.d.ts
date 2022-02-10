@@ -1,3 +1,5 @@
+import type { TValidMonth } from "./common";
+
 export type TVillagerSpecies =
   | "alligator"
   | "anteater"
@@ -39,64 +41,6 @@ export type TVillagerSpecies =
 export type TVillagerGame = "DNM" | "AC" | "E_PLUS" | "WW" | "CF" | "NL" | "WA" | "NH" | "FILM" | "HHD" | "PC";
 
 export type TVillagerPersonality = "lazy" | "jock" | "cranky" | "smug" | "normal" | "peppy" | "snooty" | "sisterly";
-
-export type TVillagerBirthmonth =
-  | "jan"
-  | "january"
-  | "01"
-  | "1"
-  | 1
-  | "feb"
-  | "february"
-  | "02"
-  | "2"
-  | 2
-  | "mar"
-  | "march"
-  | "03"
-  | "3"
-  | 3
-  | "apr"
-  | "april"
-  | "04"
-  | "4"
-  | 4
-  | "may"
-  | "05"
-  | "5"
-  | 5
-  | "jun"
-  | "june"
-  | "06"
-  | "6"
-  | 6
-  | "jul"
-  | "july"
-  | "07"
-  | "7"
-  | 7
-  | "aug"
-  | "august"
-  | "08"
-  | "8"
-  | 8
-  | "sep"
-  | "september"
-  | "09"
-  | "9"
-  | 9
-  | "oct"
-  | "october"
-  | "10"
-  | 10
-  | "nov"
-  | "november"
-  | "11"
-  | 11
-  | "dec"
-  | "december"
-  | "12"
-  | 12;
 
 export type TVillagerBirthday =
   | 1
@@ -191,7 +135,7 @@ export type IVillager = {
   /**
    * Villager's birthday month
    */
-  birthday_month: TVillagerBirthmonth;
+  birthday_month: TValidMonth;
   /**
    * Villager's birthday day
    */
@@ -335,7 +279,7 @@ export type TVillagerFilter = {
    *
    * Value may be the month's name (jan, january) or the integer representing the month (01, 1).
    */
-  birthmonth?: TVillagerBirthmonth;
+  birthmonth?: TValidMonth;
   /**
    * Use with birthmonth to get villager(s) born on a specific day.
    */
