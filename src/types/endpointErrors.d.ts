@@ -1,4 +1,4 @@
-export interface IEndpointError {
+export type TEndpointError ={
   title: string;
   details: string;
 }

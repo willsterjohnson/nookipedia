@@ -33,8 +33,7 @@ export type TFishHemisphereInfo = {
   months_array: Array<number>;
 };
 
-// @dev hm yes, funny name
-export type IFish = {
+export type TFish = {
   /**
    * The URL to the Nookipedia page for this fish.
    */
@@ -57,8 +56,10 @@ export type IFish = {
   render_url: string;
   /**
    * The time this fish can be caught.
+   *
+   * IMPORTANT: This doesn't appear to be sent by the API, though it is typed incase it's a Partial type.
    */
-  time: string;
+  time?: string;
   /**
    * The location this fish may be found in.
    */
@@ -105,7 +106,7 @@ export type IFish = {
   south: TFishHemisphereInfo;
 };
 
-export type IVillagerExcludeDetails = string;
+export type TVillagerExcludeDetails = string;
 
 export type TFishFilterSingle = {
   /**
