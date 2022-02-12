@@ -50,9 +50,8 @@ export default class Nookipedia {
         "content-type": "application/json",
       },
     });
-    // @dev can this be done with `.text()`?
-    const stringify = JSON.stringify(await response.json());
-    return JSON.parse(stringify.replaceAll("\u2013", "-")) as T;
+    const stringify = await response.text();
+    return JSON.parse(stringify.replace(/\\u2013/g, "-")) as T;
   }
 
   /**
@@ -95,23 +94,20 @@ export default class Nookipedia {
   }
 
   /**
-   * @issue DO NOT USE - issue with typing, unknown cause
    * @dev add documentation
    * @since 0.1.0
-   * @template {Promise<Array<TVillager> | Array<TVillagerNHDetails> | Array<TVillagerExcludeDetails> | Array<TFish> | TFish | TEndpointError>} T
+   * @template {ReturnType<Nookipedia["villagers"]> | ReturnType<Nookipedia["fish"]>} T
    * @param {T} apiResponse
-   * @returns {Promise<Array<TVillager> | Array<TVillagerNHDetails> | Array<TVillagerExcludeDetails> | Array<TFish> | TFish>}
+   * @returns {Promise<Exclude<Awaited<T>, TEndpointError>>}
    */
-  public async checkErrors<
-    T extends Promise<
-      Array<TVillager> | Array<TVillagerNHDetails> | Array<TVillagerExcludeDetails> | Array<TFish> | TFish | TEndpointError
-    >,
-  >(apiResponse: T): Promise<Array<TVillager> | Array<TVillagerNHDetails> | Array<TVillagerExcludeDetails> | Array<TFish> | TFish> {
+  public async checkErrors<T extends ReturnType<Nookipedia["villagers"]> | ReturnType<Nookipedia["fish"]>>(
+    apiResponse: T,
+  ): Promise<Exclude<Awaited<T>, TEndpointError>> {
     const out = await apiResponse;
     if ("title" in out) {
       throw new Error(out.title + ": " + out.details);
     } else {
-      return out;
+      return out as Exclude<Awaited<T>, TEndpointError>;
     }
   }
 
@@ -126,6 +122,9 @@ export default class Nookipedia {
   public async villagers(filters?: TVillagerFilterExcludeDetails): Promise<Array<TVillagerExcludeDetails> | TEndpointError>;
   public async villagers(
     filters?: TVillagerFilter | TVillagerFilterNHDetails | TVillagerFilterExcludeDetails,
+  ): Promise<Array<TVillager> | Array<TVillagerNHDetails> | Array<TVillagerExcludeDetails> | TEndpointError>;
+  public async villagers(
+    filters?: TVillagerFilter | TVillagerFilterNHDetails | TVillagerFilterExcludeDetails,
   ): Promise<Array<TVillager> | Array<TVillagerNHDetails> | Array<TVillagerExcludeDetails> | TEndpointError> {
     const endpoint = "villagers?" + this.bodyToParams(filters ?? {});
     return await this.fetch<Array<TVillager> | Array<TVillagerNHDetails> | Array<TVillagerExcludeDetails> | TEndpointError>(endpoint);
@@ -133,12 +132,13 @@ export default class Nookipedia {
 
   /**
    * @dev add documentation
-   * @since 0.1.0
+   * @since 0.2.0
    * @param {TFishFilterSingle | TFishFilterMany} [filters]
    * @returns {Promise<Array<TFish> | TFish | TEndpointError>}
    */
   public async fish(filters: TFishFilterSingle): Promise<TFish | TEndpointError>;
   public async fish(filters?: TFishFilterMany): Promise<Array<TFish> | TEndpointError>;
+  public async fish(filters?: TFishFilterSingle | TFishFilterMany): Promise<Array<TFish> | TFish | TEndpointError>;
   public async fish(filters?: TFishFilterSingle | TFishFilterMany): Promise<Array<TFish> | TFish | TEndpointError> {
     console.log(`/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?`);
     const endpoint = `/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?` + this.bodyToParams(filters ?? {});
