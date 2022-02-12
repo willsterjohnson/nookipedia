@@ -144,14 +144,4 @@ export default class Nookipedia {
     const endpoint = `/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?` + this.bodyToParams(filters ?? {});
     return await this.fetch<Array<TFish> | TFish | TEndpointError>(endpoint);
   }
-
-  public async fish(filters: TFishFilterSingle): Promise<IFish | IEndpointError>;
-  public async fish(filters?: TFishFilterMany): Promise<Array<IFish> | IEndpointError>;
-  public async fish(filters?: TFishFilterSingle | TFishFilterMany): Promise<Array<IFish> | IFish | IEndpointError> {
-    console.log(`/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?`);
-    const endpoint = `/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?` + this.bodyToParams(filters ?? {});
-    const response = await this.fetch(endpoint);
-    const data = (await response.json()) as Array<IFish> | IFish | IEndpointError;
-    return data;
-  }
 }
