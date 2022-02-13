@@ -73,7 +73,7 @@ import Nookipedia from "@willsterjohnson/nookipedia";
 import dotenv from "dotenv";
 dotenv.config();
 
-const nk = new Nookipedia(process.env["NOOKIPEDIA_TOKEN"]) as const;
+const nk = new Nookipedia(process.env["NOOKIPEDIA_TOKEN"] as string) as const;
 ```
 
 ### Error Checking and Type Safety
