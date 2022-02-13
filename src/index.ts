@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import type { MaybeArray } from "./types/utils";
 import type { TEndpointError } from "./types/endpointErrors";
+import type { TBug, TBugExcludeDetails, TBugFilterExcludeDetails, TBugFilterMany, TBugFilterSingle } from "./types/bugs";
 import type { TFish, TFishExcludeDetails, TFishFilterExcludeDetails, TFishFilterMany, TFishFilterSingle } from "./types/fish";
 import type {
   TVillager,
@@ -96,11 +97,11 @@ export default class Nookipedia {
   /**
    * @dev add documentation
    * @since 0.1.0
-   * @template {ReturnType<Nookipedia["villagers"]> | ReturnType<Nookipedia["fish"]>} T
+   * @template {ReturnType<Nookipedia["bugs"]>|ReturnType<Nookipedia["fish"]>|ReturnType<Nookipedia["villagers"]>} T
    * @param {T} apiResponse
    * @returns {Promise<Exclude<Awaited<T>, TEndpointError>>}
    */
-  public async checkErrors<T extends ReturnType<Nookipedia["villagers"]> | ReturnType<Nookipedia["fish"]>>(
+  public async checkErrors<T extends ReturnType<Nookipedia["bugs"]> | ReturnType<Nookipedia["fish"]> | ReturnType<Nookipedia["villagers"]>>(
     apiResponse: T,
   ): Promise<Exclude<Awaited<T>, TEndpointError>> {
     const out = await apiResponse;
@@ -138,8 +139,8 @@ export default class Nookipedia {
   /**
    * @dev add documentation
    * @since 0.2.0
-   * @param {TFishFilterSingle | TFishFilterMany} [filters]
-   * @returns {Promise<Array<TFish> | TFish | TEndpointError>}
+   * @param {TFishFilterSingle | TFishFilterMany | TFishFilterExcludeDetails} [filters]
+   * @returns {Promise<TFish | Array<TFish> | Array<TFishExcludeDetails> | TEndpointError>}
    */
   // get one fish
   public async fish(filters: TFishFilterSingle): Promise<TFish | TEndpointError>;
@@ -155,8 +156,31 @@ export default class Nookipedia {
   public async fish(
     filters?: TFishFilterSingle | TFishFilterMany | TFishFilterExcludeDetails,
   ): Promise<TFish | Array<TFish> | Array<TFishExcludeDetails> | TEndpointError> {
-    console.log(`/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?`);
-    const endpoint = `/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?` + this.bodyToParams(filters ?? {});
+    const endpoint = `/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?${this.bodyToParams(filters ?? {})}`;
     return await this.fetch<Array<TFish> | TFish | TEndpointError>(endpoint);
+  }
+
+  /**
+   * @dev add documentation
+   * @since 0.2.0
+   * @param {TBugFilterSingle | TBugFilterMany | TBugFilterExcludeDetails} [filters]
+   * @returns {Promise<TBug | Array<TBug> | Array<TBugExcludeDetails> | TEndpointError>}
+   */
+  // get one bug
+  public async bugs(filters: TBugFilterSingle): Promise<TBug | TEndpointError>;
+  // get many bugs
+  public async bugs(filters?: TBugFilterMany): Promise<Array<TBug> | TEndpointError>;
+  // get many bugs names only
+  public async bugs(filters?: TBugFilterExcludeDetails): Promise<Array<TBugExcludeDetails> | TEndpointError>;
+  // type safety
+  public async bugs(
+    filters?: TBugFilterSingle | TBugFilterMany | TBugFilterExcludeDetails,
+  ): Promise<TBug | Array<TBug> | Array<TBugExcludeDetails> | TEndpointError>;
+  // implementation
+  public async bugs(
+    filters?: TBugFilterSingle | TBugFilterMany | TBugFilterExcludeDetails,
+  ): Promise<TBug | Array<TBug> | Array<TBugExcludeDetails> | TEndpointError> {
+    const endpoint = `/nh/bugs${filters && "bug" in filters ? `/${filters.bug}` : ""}?${this.bodyToParams(filters ?? {})}`;
+    return await this.fetch<Array<TBug> | TBug | TEndpointError>(endpoint);
   }
 }
