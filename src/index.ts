@@ -126,7 +126,7 @@ export default class Nookipedia {
     }
   }
 
-  private gameNameMap: Record<TVillagerGameAlt, TVillagerGameActual> = {
+  private gameNameAliasMap: Record<TVillagerGameAlt, TVillagerGameActual> = {
     "dobutsu no mori": "DNM",
     "animal crossing": "AC",
     "e+": "E_PLUS",
@@ -137,6 +137,7 @@ export default class Nookipedia {
     "welcome amiibo": "WA",
     "new horizons": "NH",
     "dobutsu no mori film": "FILM",
+    "gekijoban dobutsu no mori": "FILM",
     "happy home designer": "HHD",
     "pocket camp": "PC",
   };
@@ -163,8 +164,8 @@ export default class Nookipedia {
     if (filters) {
       let games = Array.isArray(filters.game) ? filters.game : filters.game ? [filters.game] : [];
       filters.game = games.map((game) => {
-        if (game in this.gameNameMap) {
-          game = this.gameNameMap[game as TVillagerGameAlt];
+        if (game in this.gameNameAliasMap) {
+          game = this.gameNameAliasMap[game as TVillagerGameAlt];
         }
         return game;
       });

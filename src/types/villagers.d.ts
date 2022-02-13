@@ -5,7 +5,7 @@ export type TVillagerSpecies = "Alligator" | "alligator" | "Anteater" | "anteate
 // TODO: full names permitted and translated to identifiers
 export type TVillagerGameActual = "DNM" | "AC" | "E_PLUS" | "WW" | "CF" | "NL" | "WA" | "NH" | "FILM" | "HHD" | "PC";
 
-export type TVillagerGameAlt = "dobutsu no mori" | "animal crossing" | "e+" | "dobutsu no mori e+" | "wild world" | "city folk" | "new leaf" | "welcome amiibo" | "new horizons" | "dobutsu no mori film" | "happy home designer" | "pocket camp"
+export type TVillagerGameAlt = "dobutsu no mori" | "animal crossing" | "e+" | "dobutsu no mori e+" | "wild world" | "city folk" | "new leaf" | "welcome amiibo" | "new horizons" | "dobutsu no mori film" | "gekijoban dobutsu no mori" | "happy home designer" | "pocket camp"
 
 export type TVillagerGame = TVillagerGameActual | TVillagerGameAlt;
 
