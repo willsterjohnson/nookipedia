@@ -7,7 +7,7 @@
   "scripts": {
     "prettier:check": "prettier --ignore-path .prettierignore --check --plugin-search-dir=. .",
     "prettier:write": "prettier --ignore-path .prettierignore --write --plugin-search-dir=. .",
-    "package": "svelte-kit package && npm run prettier:write"
+    "package": "svelte-kit package && node scripts/dev-todo.mjs && npm run prettier:write"
   },
   "": "Weird Dev Environment, right?",
   "devDependencies": {
