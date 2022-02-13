@@ -106,7 +106,7 @@ export type TFish = {
   south: TFishHemisphereInfo;
 };
 
-export type TVillagerExcludeDetails = string;
+export type TFishExcludeDetails = string;
 
 export type TFishFilterSingle = {
   /**
@@ -135,13 +135,6 @@ export type TFishFilterMany = {
    */
   thumbsize?: string;
   /**
-   * Exclude information.
-   *
-   * When set to true, only fish names are returned.
-   * Instead of an array of objects with all details, the return will be an array of strings.
-   */
-  excludedetails?: boolean;
-  /**
    * Retrive only the fish that are available in a specific month.
    *
    * Value may be the month's name (jan, january) or the integer representing the month (01, 1).
@@ -154,3 +147,13 @@ export type TFishFilterMany = {
    */
   month?: TValidMonth | "current";
 };
+
+export type TFishFilterExcludeDetails = TFishFilterMany & {
+  /**
+   * Exclude information.
+   *
+   * When set to true, only fish names are returned.
+   * Instead of an array of objects with all details, the return will be an array of strings.
+   */
+   excludedetails: true;
+}

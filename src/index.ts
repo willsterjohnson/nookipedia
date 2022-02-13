@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
-import type { TEndpointError } from "./types/endpointErrors";
-import type { TFish, TFishFilterMany, TFishFilterSingle } from "./types/fish";
 import type { MaybeArray } from "./types/utils";
+import type { TEndpointError } from "./types/endpointErrors";
+import type { TFish, TFishExcludeDetails, TFishFilterExcludeDetails, TFishFilterMany, TFishFilterSingle } from "./types/fish";
 import type {
   TVillager,
   TVillagerExcludeDetails,
@@ -57,7 +57,7 @@ export default class Nookipedia {
   /**
    * @dev add in-house documentation
    * @since 0.1.0
-   * @param {Record<string, MaybeArray<string | number | boolean>>} body
+   * @param {Record<string, import("./types/utils").MaybeArray<string | number | boolean>>} body
    * @returns {string}
    */
   private bodyToParams(body: Record<string, MaybeArray<string | number | boolean>>): string {
@@ -117,12 +117,17 @@ export default class Nookipedia {
    * @param {VillagerFilter | TVillagerFilterNHDetails | TVillagerFilterExcludeDetail} [filters]
    * @returns {Promise<Array<TVillager | TVillagerNHDetails | TVillagerExcludeDetails> | TEndpointError>}
    */
+  // get villagers
   public async villagers(filters?: TVillagerFilter): Promise<Array<TVillager> | TEndpointError>;
+  // get villagers + New Horizons details
   public async villagers(filters?: TVillagerFilterNHDetails): Promise<Array<TVillagerNHDetails> | TEndpointError>;
+  // get villager names only
   public async villagers(filters?: TVillagerFilterExcludeDetails): Promise<Array<TVillagerExcludeDetails> | TEndpointError>;
+  // type safety
   public async villagers(
     filters?: TVillagerFilter | TVillagerFilterNHDetails | TVillagerFilterExcludeDetails,
   ): Promise<Array<TVillager> | Array<TVillagerNHDetails> | Array<TVillagerExcludeDetails> | TEndpointError>;
+  // implementation
   public async villagers(
     filters?: TVillagerFilter | TVillagerFilterNHDetails | TVillagerFilterExcludeDetails,
   ): Promise<Array<TVillager> | Array<TVillagerNHDetails> | Array<TVillagerExcludeDetails> | TEndpointError> {
@@ -136,10 +141,20 @@ export default class Nookipedia {
    * @param {TFishFilterSingle | TFishFilterMany} [filters]
    * @returns {Promise<Array<TFish> | TFish | TEndpointError>}
    */
+  // get one fish
   public async fish(filters: TFishFilterSingle): Promise<TFish | TEndpointError>;
+  // get many fish
   public async fish(filters?: TFishFilterMany): Promise<Array<TFish> | TEndpointError>;
-  public async fish(filters?: TFishFilterSingle | TFishFilterMany): Promise<Array<TFish> | TFish | TEndpointError>;
-  public async fish(filters?: TFishFilterSingle | TFishFilterMany): Promise<Array<TFish> | TFish | TEndpointError> {
+  // get many fish names only
+  public async fish(filters?: TFishFilterExcludeDetails): Promise<Array<TFishExcludeDetails> | TEndpointError>;
+  // type safety
+  public async fish(
+    filters?: TFishFilterSingle | TFishFilterMany | TFishFilterExcludeDetails,
+  ): Promise<TFish | Array<TFish> | Array<TFishExcludeDetails> | TEndpointError>;
+  // implementation
+  public async fish(
+    filters?: TFishFilterSingle | TFishFilterMany | TFishFilterExcludeDetails,
+  ): Promise<TFish | Array<TFish> | Array<TFishExcludeDetails> | TEndpointError> {
     console.log(`/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?`);
     const endpoint = `/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?` + this.bodyToParams(filters ?? {});
     return await this.fetch<Array<TFish> | TFish | TEndpointError>(endpoint);
