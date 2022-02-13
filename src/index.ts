@@ -121,9 +121,9 @@ export default class Nookipedia {
   /**
    * @dev add documentation
    * @since 0.1.0
-   * @template {ReturnType<Nookipedia["bugs"]>|ReturnType<Nookipedia["fish"]>|ReturnType<Nookipedia["villagers"]>} T
+   * @template {ReturnType<Nookipedia["bugs"]> | ReturnType<Nookipedia["fish"]> | ReturnType<Nookipedia["villagers"]>} T
    * @param {T} apiResponse
-   * @returns {Promise<Exclude<Awaited<T>, TEndpointError>>}
+   * @returns {Promise<Exclude<Awaited<T>, import("./types/endpointErrors").TEndpointError>>}
    */
   public async checkErrors<T extends ReturnType<Nookipedia["bugs"]> | ReturnType<Nookipedia["fish"]> | ReturnType<Nookipedia["villagers"]>>(
     apiResponse: T,
@@ -139,7 +139,7 @@ export default class Nookipedia {
   /**
    * @dev add in-house documentation
    * @since 0.2.0
-   * @type {string}
+   * @type {Record<import("./types/villagers").TVillagerGameAlt, import("./types/villagers").TVillagerGameActual>}
    */
   private gameNameAliasMap: Record<TVillagerGameAlt, TVillagerGameActual> = {
     "dobutsu no mori": "DNM",
@@ -159,8 +159,8 @@ export default class Nookipedia {
   /**
    * @dev add documentation
    * @since 0.1.0
-   * @param {VillagerFilter | TVillagerFilterNHDetails | TVillagerFilterExcludeDetail} [filters]
-   * @returns {Promise<Array<TVillager | TVillagerNHDetails | TVillagerExcludeDetails> | TEndpointError>}
+   * @param {import("./types/villagers").TVillagerFilter | import("./types/villagers").TVillagerFilterNHDetails | import("./types/villagers").TVillagerFilterExcludeDetail} [filters]
+   * @returns {Promise<Array<import("./types/villagers").TVillager> | Array<import("./types/villagers").TVillagerNHDetails> | Array<import("./types/villagers").TVillagerExcludeDetails> | import("./types/endpointErrors").TEndpointError>}
    */
   // get villagers
   public async villagers(filters?: TVillagerFilter): Promise<Array<TVillager> | TEndpointError>;
@@ -192,8 +192,8 @@ export default class Nookipedia {
   /**
    * @dev add documentation
    * @since 0.2.0
-   * @param {TFishFilterSingle | TFishFilterMany | TFishFilterExcludeDetails} [filters]
-   * @returns {Promise<TFish | Array<TFish> | Array<TFishExcludeDetails> | TEndpointError>}
+   * @param {import("./types/fish").TFishFilterSingle | import("./types/fish").TFishFilterMany | import("./types/fish").TFishFilterExcludeDetails} [filters]
+   * @returns {Promise<import("./types/fish").TFish | Array<import("./types/fish").TFish> | Array<import("./types/fish").TFishExcludeDetails> | import("./types/endpointErrors").TEndpointError>}
    */
   // get one fish
   public async fish(filters: TFishFilterSingle): Promise<TFish | TEndpointError>;
@@ -216,8 +216,8 @@ export default class Nookipedia {
   /**
    * @dev add documentation
    * @since 0.2.0
-   * @param {TBugFilterSingle | TBugFilterMany | TBugFilterExcludeDetails} [filters]
-   * @returns {Promise<TBug | Array<TBug> | Array<TBugExcludeDetails> | TEndpointError>}
+   * @param {import("./types/bugs").TBugFilterSingle | import("./types/bugs").TBugFilterMany | import("./types/bugs").TBugFilterExcludeDetails} [filters]
+   * @returns {Promise<import("./types/bugs").TBug | Array<import("./types/bugs").TBug> | Array<import("./types/bugs").TBugExcludeDetails> | import("./types/endpointErrors").TEndpointError>}
    */
   // get one bug
   public async bugs(filters: TBugFilterSingle): Promise<TBug | TEndpointError>;
