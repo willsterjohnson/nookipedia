@@ -1,37 +1,4 @@
-import type { TMonthShortform, TRarityLevel, TValidMonth } from "./common";
-
-// TODO: review this type
-/** @example "4 PM – 9 AM" */
-export type TFishAppearanceTime = "NA" | "All day" | `${number} ${"AM" | "PM"} - ${number} ${"AM" | "PM"}`;
-
-// TODO: limit this to only viable options, eg don't permit "Feb - Jan"
-/** @example "Sep – Dec" */
-export type TFishMonths = `${TMonthShortform} - ${TMonthShortform}`;
-
-export type TFishHemisphereInfo = {
-  /**
-   * A list of months in which this fish can be found,
-   * and the times during those months when this fish can be found.
-   */
-  availability_array: Array<{
-    months: TFishMonths;
-    time: TFishAppearanceTime;
-  }>;
-  /**
-   * A record of the availability of this fish for each month, including unavailable months.
-   */
-  times_by_month: Record<"1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12", TFishAppearanceTime>;
-  /**
-   * The availability periods of this fish in months.
-   * Written as a string comprised of TFishMonths-like substrings.
-   * @example "Mar – May; Sep – Dec"
-   */
-  months: string;
-  /**
-   * A list of month numbers (1=Jan, 2=Feb, etc.) for each month in which this fish can be found.
-   */
-  months_array: Array<number>;
-};
+import type { TAppearanceHemisphereInfo, TRarityLevel, TValidMonth } from "./common";
 
 export type TFish = {
   /**
@@ -99,11 +66,11 @@ export type TFish = {
   /**
    * Info about the fish's appearance through the year (North Hemisphere).
    */
-  north: TFishHemisphereInfo;
+  north: TAppearanceHemisphereInfo;
   /**
    * Info about the fish's appearance through the year (South Hemisphere).
    */
-  south: TFishHemisphereInfo;
+  south: TAppearanceHemisphereInfo;
 };
 
 export type TFishExcludeDetails = string;
