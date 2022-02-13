@@ -1,12 +1,12 @@
 import type { TAppearanceHemisphereInfo, TRarityLevel, TValidMonth } from "./common";
 
-export type TFish = {
+export type TBug = {
   /**
-   * The URL to the Nookipedia page for this fish.
+   * The URL to the Nookipedia page for this bug.
    */
   url: string;
   /**
-   * The name of this fish.
+   * The name of this bug.
    */
   name: string;
   /**
@@ -14,29 +14,25 @@ export type TFish = {
    */
   number: number;
   /**
-   * The URL for the image of this fish.
+   * The URL for the image of this bug.
    */
   image_url: string;
   /**
-   * The URL for the rendered model of this fish.
+   * The URL for the rendered model of this bug.
    */
   render_url: string;
   /**
-   * The time this fish can be caught.
+   * The time this bug can be caught.
    *
    * IMPORTANT: This doesn't appear to be sent by the API, though it is typed incase it's a Partial type.
    */
   time?: string;
   /**
-   * The location this fish may be found in.
+   * The location this bug may be found in.
    */
   location: string;
   /**
-   * The size of this fish's shadow.
-   */
-  shadow_size: string;
-  /**
-   * The rarity level of this fish.
+   * The rarity level of this bug.
    */
   rarity: TRarityLevel;
   /**
@@ -44,42 +40,42 @@ export type TFish = {
    */
   total_catch: number;
   /**
-   * The price this fish will sell for at Nook's Cranny.
+   * The price this bug will sell for at Nook's Cranny.
    */
   sell_nook: number;
   /**
-   * The price this fish will sell for with CJ.
+   * The price this bug will sell for with CJ.
    */
-  sell_cj: number;
+  sell_flick: number;
   /**
-   * The width of this fish's tank.
+   * The width of this bug's tank.
    */
   tank_width: number;
   /**
-   * The length of this fish's tank.
+   * The length of this bug's tank.
    */
   tank_length: number;
   /**
-   * The catchphrases said when catching this fish.
+   * The catchphrases said when catching this bug.
    */
   catchphrases: Array<string>;
   /**
-   * Info about the fish's appearance through the year (North Hemisphere).
+   * Info about the bug's appearance through the year (North Hemisphere).
    */
   north: TAppearanceHemisphereInfo;
   /**
-   * Info about the fish's appearance through the year (South Hemisphere).
+   * Info about the bug's appearance through the year (South Hemisphere).
    */
   south: TAppearanceHemisphereInfo;
 };
 
-export type TFishExcludeDetails = string;
+export type TBugExcludeDetails = string;
 
-export type TFishFilterSingle = {
+export type TBugFilterSingle = {
   /**
-   * The name of the fish you wish to retrieve information about.
+   * The name of the bug you wish to retrieve information about.
    */
-  fish: string;
+  bug: string;
   /**
    * Specify the desired width of returned image URLs.
    *
@@ -91,7 +87,7 @@ export type TFishFilterSingle = {
   thumbsize?: string;
 };
 
-export type TFishFilterMany = {
+export type TBugFilterMany = {
   /**
    * Specify the desired width of returned image URLs.
    *
@@ -102,12 +98,12 @@ export type TFishFilterMany = {
    */
   thumbsize?: string;
   /**
-   * Retrive only the fish that are available in a specific month.
+   * Retrive only the bug that are available in a specific month.
    *
    * Value may be the month's name (jan, january) or the integer representing the month (01, 1).
    *
    * When current is specified, the return body will be an object with two arrays inside,
-   * one called north and the other south containing the fish available in each respective hemisphere.
+   * one called north and the other south containing the bug available in each respective hemisphere.
    *
    * Note that the current month is calculated based off the API server's time,
    * so it may be slightly off for you at the beginning or end of the month.
@@ -115,11 +111,11 @@ export type TFishFilterMany = {
   month?: TValidMonth | "current";
 };
 
-export type TFishFilterExcludeDetails = TFishFilterMany & {
+export type TBugFilterExcludeDetails = TBugFilterMany & {
   /**
    * Exclude information.
    *
-   * When set to true, only fish names are returned.
+   * When set to true, only bug names are returned.
    * Instead of an array of objects with all details, the return will be an array of strings.
    */
    excludedetails: true;
