@@ -25,7 +25,6 @@ function main() {
   }
   iterateDir(packageDir, (pathname) => {
     if (pathname.endsWith(".ts") || pathname.endsWith(".js")) {
-      console.log(pathname);
       const fileContents = fs.readFileSync(pathname, "utf8");
       fs.writeFileSync(pathname, fileContents.replace(/\s*?(\*|\/\/)\s*?(@dev|TODO).+?\n/g, "\n"));
     }
