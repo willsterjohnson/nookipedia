@@ -1,6 +1,6 @@
 {
   "name": "@willsterjohnson/nookipedia",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "An unofficial JavaScript driver for the [Nookipedia API](https://api.nookipedia.com/).",
   "license": "MIT",
   "homepage": "https://github.com/willsterjohnson/nookipedia#readme",
