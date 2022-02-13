@@ -1,21 +1,52 @@
 import type { TValidMonth } from "./common";
 
+/**
+ * @dev add documentation
+ * @since 0.1.0
+ */
 export type TVillagerSpecies = "Alligator" | "alligator" | "Anteater" | "anteater" | "Bear" | "bear" | "Bird" | "bird" | "Bull" | "bull" | "Cat" | "cat" | "Cub" | "cub" | "Chicken" | "chicken" | "Cow" | "cow" | "Deer" | "deer" | "Dog" | "dog" | "Duck" | "duck" | "Eagle" | "eagle" | "Elephant" | "elephant" | "Frog" | "frog" | "Goat" | "goat" | "Gorilla" | "gorilla" | "Hamster" | "hamster" | "Hippo" | "hippo" | "Horse" | "horse" | "Koala" | "koala" | "Kangaroo" | "kangaroo" | "Lion" | "lion" | "Monkey" | "monkey" | "Mouse" | "mouse" | "Octopus" | "octopus" | "Ostrich" | "ostrich" | "Penguin" | "penguin" | "Pig" | "pig" | "Rabbit" | "rabbit" | "Rhino" | "rhino" | "Sheep" | "sheep" | "Squirrel" | "squirrel" | "Tiger" | "tiger" | "Wolf" | "wolf";
 
-// TODO: full names permitted and translated to identifiers
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TVillagerGameActual = "DNM" | "AC" | "E_PLUS" | "WW" | "CF" | "NL" | "WA" | "NH" | "FILM" | "HHD" | "PC";
 
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TVillagerGameAlt = "dobutsu no mori" | "animal crossing" | "e+" | "dobutsu no mori e+" | "wild world" | "city folk" | "new leaf" | "welcome amiibo" | "new horizons" | "dobutsu no mori film" | "gekijoban dobutsu no mori" | "happy home designer" | "pocket camp"
 
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TVillagerGame = TVillagerGameActual | TVillagerGameAlt;
 
+/**
+ * @dev add documentation
+ * @since 0.1.0
+ */
 export type TVillagerPersonality = "Lazy" | "lazy" | "Jock" | "jock" | "Cranky" | "cranky" | "Smug" | "smug" | "Normal" | "normal" | "Peppy" | "peppy" | "Snooty" | "snooty" | "Sisterly" | "sisterly";
 
+/**
+ * @dev add documentation
+ * @since 0.1.0
+ */
 export type TVillagerBirthday = "1" | 1 | "2" | 2 | "3" | 3 | "4" | 4 | "5" | 5 | "6" | 6 | "7" | 7 | "8" | 8 | "9" | 9 | "10" | 10 | "11" | 11 | "12" | 12 | "13" | 13 | "14" | 14 | "15" | 15 | "16" | 16 | "17" | 17 | "18" | 18 | "19" | 19 | "20" | 20 | "21" | 21 | "22" | 22 | "23" | 23 | "24" | 24 | "25" | 25 | "26" | 26 | "27" | 27 | "28" | 28 | "29" | 29 | "30" | 30 | "31" | 31;
 
+/**
+ * @dev add documentation
+ * @since 0.1.0
+ */
 export type TVillagerStarSign = "Aries" | "aries" | "Taurus" | "taurus" | "Gemini" | "gemini" | "Cancer" | "cancer" | "Leo" | "leo" | "Virgo" | "virgo" | "Libra" | "libra" | "Scorpio" | "scorpio" | "Sagittarius" | "sagittarius" | "Capricorn" | "capricorn" | "Aquarius" | "aquarius" | "Pisces" | "pisces";
 
 // TODO: more descriptive JSDoc
+/**
+ * @dev add documentation
+ * @since 0.1.0
+ */
 export type TVillager = {
   /**
    * Villager's Nookipedia URL
@@ -100,9 +131,17 @@ export type TVillager = {
   appearances: Array<TVillagerGame>;
 };
 
+/**
+ * @dev add documentation
+ * @since 0.1.0
+ */
 export type TVillagerExcludeDetails = string;
 
 // TODO: more descriptive JSDoc
+/**
+ * @dev add documentation
+ * @since 0.1.0
+ */
 export type TVillagerNHDetails = TVillager & {
   nh_details: {
     /**
@@ -176,6 +215,10 @@ export type TVillagerNHDetails = TVillager & {
   };
 };
 
+/**
+ * @dev add documentation
+ * @since 0.1.0
+ */
 export type TVillagerFilter = {
   /**
    * Villager name
@@ -223,6 +266,10 @@ export type TVillagerFilter = {
   thumbsize?: number;
 };
 
+/**
+ * @dev add documentation
+ * @since 0.1.0
+ */
 export type TVillagerFilterExcludeDetails = TVillagerFilter & {
   /**
    * Retrive New Horizons info.
@@ -240,6 +287,10 @@ export type TVillagerFilterExcludeDetails = TVillagerFilter & {
   excludedetails: true;
 };
 
+/**
+ * @dev add documentation
+ * @since 0.1.0
+ */
 export type TVillagerFilterNHDetails = TVillagerFilter & {
   /**
    * Retrive New Horizons info.

@@ -1,5 +1,9 @@
 import type { TAppearanceHemisphereInfo, TRarityLevel, TValidMonth } from "./common";
 
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TBug = {
   /**
    * The URL to the Nookipedia page for this bug.
@@ -69,8 +73,16 @@ export type TBug = {
   south: TAppearanceHemisphereInfo;
 };
 
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TBugExcludeDetails = string;
 
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TBugFilterSingle = {
   /**
    * The name of the bug you wish to retrieve information about.
@@ -87,6 +99,10 @@ export type TBugFilterSingle = {
   thumbsize?: string;
 };
 
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TBugFilterMany = {
   /**
    * Specify the desired width of returned image URLs.
@@ -111,6 +127,10 @@ export type TBugFilterMany = {
   month?: TValidMonth | "current";
 };
 
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TBugFilterExcludeDetails = TBugFilterMany & {
   /**
    * Exclude information.

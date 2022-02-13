@@ -16,6 +16,16 @@ import type {
 
 /**
  * @dev add documentation
+ * @since 0.2.1
+ */
+export type NookipediaConfig = {
+  baseURL?: string;
+  apiVersion?: string;
+  logUrl?: boolean;
+};
+
+/**
+ * @dev add documentation
  * @since 0.1.0
  */
 export default class Nookipedia {
@@ -89,9 +99,9 @@ export default class Nookipedia {
    * @dev add documentation
    * @since 0.1.0
    * @param {string} apiKey
-   * @param {{ baseURL?: string; apiVersion?: string; logUrl?: boolean }} [config={}]
+   * @param {import("./index").NookipediaConfig} [config={}]
    */
-  constructor(apiKey: string, config: { baseURL?: string; apiVersion?: string; logUrl?: boolean } = {}) {
+  constructor(apiKey: string, config: NookipediaConfig = {}) {
     this.apiKey = apiKey;
     if (config.apiVersion) {
       if (/\d+\.\d+\.\d+/.test(config.apiVersion)) {
@@ -126,6 +136,11 @@ export default class Nookipedia {
     }
   }
 
+  /**
+   * @dev add in-house documentation
+   * @since 0.2.0
+   * @type {string}
+   */
   private gameNameAliasMap: Record<TVillagerGameAlt, TVillagerGameActual> = {
     "dobutsu no mori": "DNM",
     "animal crossing": "AC",

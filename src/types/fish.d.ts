@@ -1,5 +1,9 @@
 import type { TAppearanceHemisphereInfo, TRarityLevel, TValidMonth } from "./common";
 
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TFish = {
   /**
    * The URL to the Nookipedia page for this fish.
@@ -73,8 +77,16 @@ export type TFish = {
   south: TAppearanceHemisphereInfo;
 };
 
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TFishExcludeDetails = string;
 
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TFishFilterSingle = {
   /**
    * The name of the fish you wish to retrieve information about.
@@ -91,6 +103,10 @@ export type TFishFilterSingle = {
   thumbsize?: string;
 };
 
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TFishFilterMany = {
   /**
    * Specify the desired width of returned image URLs.
@@ -115,6 +131,10 @@ export type TFishFilterMany = {
   month?: TValidMonth | "current";
 };
 
+/**
+ * @dev add documentation
+ * @since 0.2.0
+ */
 export type TFishFilterExcludeDetails = TFishFilterMany & {
   /**
    * Exclude information.
