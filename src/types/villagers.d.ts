@@ -3,7 +3,11 @@ import type { TValidMonth } from "./common";
 export type TVillagerSpecies = "Alligator" | "alligator" | "Anteater" | "anteater" | "Bear" | "bear" | "Bird" | "bird" | "Bull" | "bull" | "Cat" | "cat" | "Cub" | "cub" | "Chicken" | "chicken" | "Cow" | "cow" | "Deer" | "deer" | "Dog" | "dog" | "Duck" | "duck" | "Eagle" | "eagle" | "Elephant" | "elephant" | "Frog" | "frog" | "Goat" | "goat" | "Gorilla" | "gorilla" | "Hamster" | "hamster" | "Hippo" | "hippo" | "Horse" | "horse" | "Koala" | "koala" | "Kangaroo" | "kangaroo" | "Lion" | "lion" | "Monkey" | "monkey" | "Mouse" | "mouse" | "Octopus" | "octopus" | "Ostrich" | "ostrich" | "Penguin" | "penguin" | "Pig" | "pig" | "Rabbit" | "rabbit" | "Rhino" | "rhino" | "Sheep" | "sheep" | "Squirrel" | "squirrel" | "Tiger" | "tiger" | "Wolf" | "wolf";
 
 // TODO: full names permitted and translated to identifiers
-export type TVillagerGame = "DNM" | "AC" | "E_PLUS" | "WW" | "CF" | "NL" | "WA" | "NH" | "FILM" | "HHD" | "PC";
+export type TVillagerGameActual = "DNM" | "AC" | "E_PLUS" | "WW" | "CF" | "NL" | "WA" | "NH" | "FILM" | "HHD" | "PC";
+
+export type TVillagerGameAlt = "dobutsu no mori" | "animal crossing" | "e+" | "dobutsu no mori e+" | "wild world" | "city folk" | "new leaf" | "welcome amiibo" | "new horizons" | "dobutsu no mori film" | "happy home designer" | "pocket camp"
+
+export type TVillagerGame = TVillagerGameActual | TVillagerGameAlt;
 
 export type TVillagerPersonality = "Lazy" | "lazy" | "Jock" | "jock" | "Cranky" | "cranky" | "Smug" | "smug" | "Normal" | "normal" | "Peppy" | "peppy" | "Snooty" | "snooty" | "Sisterly" | "sisterly";
 

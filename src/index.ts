@@ -10,6 +10,8 @@ import type {
   TVillagerFilter,
   TVillagerFilterExcludeDetails,
   TVillagerFilterNHDetails,
+  TVillagerGameAlt,
+  TVillagerGameActual,
 } from "./types/villagers";
 
 /**
@@ -35,6 +37,12 @@ export default class Nookipedia {
    * @type {string}
    */
   public apiVersion: string = "1.5.0";
+  /**
+   * @dev add documentation
+   * @since 0.2.0
+   * @type {boolean}
+   */
+  public logUrl: boolean = false;
 
   /**
    * @dev add in-house documentation
@@ -44,6 +52,9 @@ export default class Nookipedia {
    * @returns {Promise<T>}
    */
   private async fetch<T extends Record<string, any> | Array<Record<string, any>>>(endpoint: string): Promise<T> {
+    if (this.logUrl) {
+      console.log(`\x1b[34m[Nookipedia]\x1b[0m Attempting to fetch data from: \x1b[32m${this.baseURL}${endpoint}\x1b[0m`);
+    }
     const response = await fetch(`${this.baseURL}${endpoint}`, {
       headers: {
         "X-API-KEY": this.apiKey,
@@ -78,9 +89,9 @@ export default class Nookipedia {
    * @dev add documentation
    * @since 0.1.0
    * @param {string} apiKey
-   * @param {{ baseURL?: string; apiVersion?: string }} [config={}]
+   * @param {{ baseURL?: string; apiVersion?: string; logUrl?: boolean }} [config={}]
    */
-  constructor(apiKey: string, config: { baseURL?: string; apiVersion?: string } = {}) {
+  constructor(apiKey: string, config: { baseURL?: string; apiVersion?: string; logUrl?: boolean } = {}) {
     this.apiKey = apiKey;
     if (config.apiVersion) {
       if (/\d+\.\d+\.\d+/.test(config.apiVersion)) {
@@ -91,6 +102,9 @@ export default class Nookipedia {
     }
     if (config.baseURL) {
       this.baseURL = config.baseURL.endsWith("/") ? config.baseURL : config.baseURL + "/";
+    }
+    if (config.logUrl) {
+      this.logUrl = config.logUrl;
     }
   }
 
@@ -112,6 +126,20 @@ export default class Nookipedia {
     }
   }
 
+  private gameNameMap: Record<TVillagerGameAlt, TVillagerGameActual> = {
+    "dobutsu no mori": "DNM",
+    "animal crossing": "AC",
+    "e+": "E_PLUS",
+    "dobutsu no mori e+": "E_PLUS",
+    "wild world": "WW",
+    "city folk": "CF",
+    "new leaf": "NL",
+    "welcome amiibo": "WA",
+    "new horizons": "NH",
+    "dobutsu no mori film": "FILM",
+    "happy home designer": "HHD",
+    "pocket camp": "PC",
+  };
   /**
    * @dev add documentation
    * @since 0.1.0
@@ -132,6 +160,15 @@ export default class Nookipedia {
   public async villagers(
     filters?: TVillagerFilter | TVillagerFilterNHDetails | TVillagerFilterExcludeDetails,
   ): Promise<Array<TVillager> | Array<TVillagerNHDetails> | Array<TVillagerExcludeDetails> | TEndpointError> {
+    if (filters) {
+      let games = Array.isArray(filters.game) ? filters.game : filters.game ? [filters.game] : [];
+      filters.game = games.map((game) => {
+        if (game in this.gameNameMap) {
+          game = this.gameNameMap[game as TVillagerGameAlt];
+        }
+        return game;
+      });
+    }
     const endpoint = "villagers?" + this.bodyToParams(filters ?? {});
     return await this.fetch<Array<TVillager> | Array<TVillagerNHDetails> | Array<TVillagerExcludeDetails> | TEndpointError>(endpoint);
   }
