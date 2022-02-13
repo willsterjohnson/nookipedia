@@ -150,15 +150,3 @@ For a full list of paramaters, see either the TypeScript definition file or the 
 [To Top](#nookipedia)
 
 This project is licensed under the [MIT license](./LICENSE.md).
-
-DNM - Dobutsu no Mori
-AC - Animal Crossing
-E_PLUS - Dobutsu no Mori e+
-WW - Wild World
-CF - City Folk
-NL - New Leaf
-WA - ??? (maybe Welcome amiibo)
-NH - New Horizons
-FILM - ???
-HHD - Happy Home Designer
-PC - Pocket Camp
