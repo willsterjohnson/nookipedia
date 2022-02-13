@@ -14,6 +14,8 @@ To install the package, run;
 npm install --save @willsterjohnson/nookipedia
 ```
 
+It's important you install the package `@willsterjohnson/nookipedia` **NOT** `nookipedia`, as the `nookipedia` library is deprecated and not affiliated with this project.
+
 ## Quick Start
 
 [To Top](#nookipedia)
