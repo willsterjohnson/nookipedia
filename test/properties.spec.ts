@@ -4,84 +4,86 @@ import Nookipedia from "../src";
 import dotenv from "dotenv";
 dotenv.config();
 
-const nk = new Nookipedia(process.env["NOOKIPEDIA_API_KEY"] as string);
+const errmsg = (name: string, not: boolean = false) => `Nookipedia class should ${not ? "not " : ""}have public ${name}`;
 
-//   "Class properties & methods": {
-describe("Class properties & methods", () => {
-  it("should have 'baseURL' property (string)", () => {
-    i.expect(nk.baseURL).to.be.a("string");
+// modify type to allow typescript to compile failing tests, requires using index access
+const nk: Record<string, any> = new Nookipedia(process.env["NOOKIPEDIA_API_KEY"] as string);
+
+describe("Nookipedia class properties & methods", () => {
+  describe("Should have public", () => {
+    it("`baseURL` property (string)", () => {
+      i.expect(nk["baseURL"], errmsg("`baseURL` property (string)")).to.be.a("string");
+    });
+    it("`apiVersion` property (string)", () => {
+      i.expect(nk["apiVersion"], errmsg("`apiVersion` property (string)")).to.be.a("string");
+    });
+    it("`logUrl` property (boolean)", () => {
+      i.expect(nk["logUrl"], errmsg("`logUrl` property (boolean)")).to.be.a("boolean");
+    });
+    it("`checkErrors` method", () => {
+      i.expect(nk["checkErrors"], errmsg("`checkErrors` method")).to.be.a("function");
+    });
+    it("`villagers` method", () => {
+      i.expect(nk["villagers"], errmsg("`villagers` method")).to.be.a("function");
+    });
+    it("`fish` method", () => {
+      i.expect(nk["fish"], errmsg("`fish` method")).to.be.a("function");
+    });
+    it("`bugs` method", () => {
+      i.expect(nk["bugs"], errmsg("`bugs` method")).to.be.a("function");
+    });
+    it("`seaCreatures` method", () => {
+      i.expect(nk["seaCreatures"], errmsg("`seaCreatures` method")).to.be.a("function");
+    });
+    it("`events` method", () => {
+      i.expect(nk["events"], errmsg("`events` method")).to.be.a("function");
+    });
+    it("`art` method", () => {
+      i.expect(nk["art"], errmsg("`art` method")).to.be.a("function");
+    });
+    it("`furniture` method", () => {
+      i.expect(nk["furniture"], errmsg("`furniture` method")).to.be.a("function");
+    });
+    it("`clothing` method", () => {
+      i.expect(nk["clothing"], errmsg("`clothing` method")).to.be.a("function");
+    });
+    it("`interior` method", () => {
+      i.expect(nk["interior"], errmsg("`interior` method")).to.be.a("function");
+    });
+    it("`tools` method", () => {
+      i.expect(nk["tools"], errmsg("`tools` method")).to.be.a("function");
+    });
+    it("`photos` method", () => {
+      i.expect(nk["photos"], errmsg("`photos` method")).to.be.a("function");
+    });
+    it("`items` method", () => {
+      i.expect(nk["items"], errmsg("`items` method")).to.be.a("function");
+    });
+    it("`recipes` method", () => {
+      i.expect(nk["recipes"], errmsg("`recipes` method")).to.be.a("function");
+    });
+    it("`fossils` method", () => {
+      i.expect(nk["fossils"], errmsg("`fossils` method")).to.be.a("function");
+    });
+    it("`fossilGroups` method", () => {
+      i.expect(nk["fossilGroups"], errmsg("`fossilGroups` method")).to.be.a("function");
+    });
+    it("`allFossils` method", () => {
+      i.expect(nk["allFossils"], errmsg("`allFossils` method")).to.be.a("function");
+    });
   });
-  it("should have 'apiVersion' property (string)", () => {
-    i.expect(nk.apiVersion).to.be.a("string");
-  });
-  it("should have 'logUrl' property (boolean)", () => {
-    i.expect(nk.logUrl).to.be.a("boolean");
-  });
-  it("should have 'checkErrors' method", () => {
-    i.expect(nk.checkErrors).to.be.a("function");
-  });
-  it("should have 'villagers' method", () => {
-    i.expect(nk.villagers).to.be.a("function");
-  });
-  it("should have 'fish' method", () => {
-    i.expect(nk.fish).to.be.a("function");
-  });
-  it("should have 'bugs' method", () => {
-    i.expect(nk.bugs).to.be.a("function");
-  });
-  // it("should have 'seaCreatures' method", () => {
-  //   i.expect(nk.seaCreatures).to.be.a("function");
-  // });
-  // it("should have 'events' method", () => {
-  //   i.expect(nk.events).to.be.a("function");
-  // });
-  // it("should have 'art' method", () => {
-  //   i.expect(nk.art).to.be.a("function");
-  // });
-  // it("should have 'furniture' method", () => {
-  //   i.expect(nk.furniture).to.be.a("function");
-  // });
-  // it("should have 'clothing' method", () => {
-  //   i.expect(nk.clothing).to.be.a("function");
-  // });
-  // it("should have 'interior' method", () => {
-  //   i.expect(nk.interior).to.be.a("function");
-  // });
-  // it("should have 'tools' method", () => {
-  //   i.expect(nk.tools).to.be.a("function");
-  // });
-  // it("should have 'photos' method", () => {
-  //   i.expect(nk.photos).to.be.a("function");
-  // });
-  // it("should have 'items' method", () => {
-  //   i.expect(nk.items).to.be.a("function");
-  // });
-  // it("should have 'recipes' method", () => {
-  //   i.expect(nk.recipes).to.be.a("function");
-  // });
-  // it("should have 'fossils' method", () => {
-  //   i.expect(nk.fossils).to.be.a("function");
-  // });
-  // it("should have 'fossilGroups' method", () => {
-  //   i.expect(nk.fossilGroups).to.be.a("function");
-  // });
-  // it("should have 'allFossils' method", () => {
-  //   i.expect(nk.allFossils).to.be.a("function");
-  // });
-  it("should not have exposed 'apiKey' property (boolean)", () => {
-    // @ts-expect-error
-    i.expect(nk.apiKey).to.be.undefined;
-  });
-  it("should not have exposed 'gameNameAliasMap' property (boolean)", () => {
-    // @ts-expect-error
-    i.expect(nk.gameNameAliasMap).to.be.undefined;
-  });
-  it("should not have exposed 'fetch' method", () => {
-    // @ts-expect-error
-    i.expect(nk.fetch).to.be.undefined;
-  });
-  it("should not have exposed 'bodyToParams' method", () => {
-    // @ts-expect-error
-    i.expect(nk.bodyToParams).to.be.undefined;
+  describe("Should not have public", () => {
+    it("`apiKey` property", () => {
+      i.expect(nk["apiKey"], errmsg("`apiKey` property", true)).to.be.undefined;
+    });
+    it("`gameNameAliasMap` property", () => {
+      i.expect(nk["gameNameAliasMap"], errmsg("`gameNameAliasMap` property", true)).to.be.undefined;
+    });
+    it("`fetch` method", () => {
+      i.expect(nk["fetch"], errmsg("`fetch` method", true)).to.be.undefined;
+    });
+    it("`bodyToParams` method", () => {
+      i.expect(nk["bodyToParams"], errmsg("`bodyToParams` method", true)).to.be.undefined;
+    });
   });
 });

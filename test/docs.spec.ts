@@ -4,14 +4,14 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Test the code found in the docs, because why not?
-describe("Docs code", () => {
+describe("README.md Docs code", () => {
   const nk = new Nookipedia(process.env["NOOKIPEDIA_API_KEY"] as string);
-  describe("README.md Setup", () => {
+  describe("Setup", () => {
     it("Instance driver class", () => {
       new Nookipedia(process.env["NOOKIPEDIA_API_KEY"] as string);
     });
   });
-  describe("README.md Error Checking and Type Safety", () => {
+  describe("Error Checking and Type Safety", () => {
     it("Error check all villagers", async () => {
       await nk.checkErrors(nk.villagers());
     });
@@ -22,7 +22,7 @@ describe("Docs code", () => {
       await nk.checkErrors(nk.bugs({ excludedetails: true }));
     });
   });
-  describe("README.md Villagers", async () => {
+  describe("Villagers", async () => {
     it("Get all villagers", async () => {
       await nk.villagers();
     });
@@ -36,7 +36,7 @@ describe("Docs code", () => {
       await nk.villagers({ nhdetails: true });
     });
   });
-  describe("README.md Fish", async () => {
+  describe("Fish", async () => {
     it("Get all fish", async () => {
       await nk.fish();
     });
@@ -47,7 +47,7 @@ describe("Docs code", () => {
       await nk.fish({ excludedetails: true });
     });
   });
-  describe("README.md Bugs", async () => {
+  describe("Bugs", async () => {
     it("Get all bugs", async () => {
       await nk.bugs();
     });
