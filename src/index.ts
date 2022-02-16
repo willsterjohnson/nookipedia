@@ -1,10 +1,11 @@
+/// <reference path="./types/index.ts" />
 import fetch from "node-fetch";
 
 /**
  * @dev add documentation
  * @since 0.1.0
  */
-export default class Nookipedia {
+export default class NookipediaClass {
   /**
    * @dev add in-house documentation
    * @since 0.1.0
@@ -75,10 +76,10 @@ export default class Nookipedia {
    * @dev add documentation
    * @since 0.1.0
    * @param {string} apiKey
-   * @param {Nookipedia.Config} [config={}]
-   * @param {Nookipedia.Config["baseURL"]} [config.baseURL]
-   * @param {Nookipedia.Config["apiVersion"]} [config.apiVersion]
-   * @param {Nookipedia.Config["logUrl"]} [config.logUrl]
+   * @param {Nookipedia.Common.Config} [config={}]
+   * @param {Nookipedia.Common.Config["baseURL"]} [config.baseURL]
+   * @param {Nookipedia.Common.Config["apiVersion"]} [config.apiVersion]
+   * @param {Nookipedia.Common.Config["logUrl"]} [config.logUrl]
    */
   constructor(apiKey: string, config: Nookipedia.Common.Config = {}) {
     this.#apiKey = apiKey;
@@ -100,12 +101,14 @@ export default class Nookipedia {
   /**
    * @dev add documentation
    * @since 0.1.0
-   * @template {Nookipedia.Utils.AwaitedReturn<Nookipedia["bugs"] | Nookipedia["fish"] | Nookipedia["villagers"]>} ExpectedType
+   * @template {Nookipedia.Utils.AwaitedReturn<NookipediaClass["bugs"] | NookipediaClass["fish"] | NookipediaClass["villagers"]>} ExpectedType
    * @param {Promise<ExpectedType | Nookipedia.Error.EndpointError>} apiResponse
    * @returns {Promise<Exclude<Awaited<ExpectedType>, Nookipedia.Error.EndpointError>>}
    */
   async checkErrors<
-    ExpectedType extends Nookipedia.Utils.AwaitedReturn<Nookipedia["bugs"] | Nookipedia["fish"] | Nookipedia["villagers"]>,
+    ExpectedType extends Nookipedia.Utils.AwaitedReturn<
+      NookipediaClass["bugs"] | NookipediaClass["fish"] | NookipediaClass["villagers"]
+    >,
   >(
     apiResponse: Promise<ExpectedType | Nookipedia.Error.EndpointError>,
   ): Promise<Exclude<Awaited<ExpectedType>, Nookipedia.Error.EndpointError>> {
