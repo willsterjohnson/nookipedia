@@ -42,7 +42,7 @@ namespace Nookipedia {
       /**
        * The rarity level of this bug.
        */
-      rarity: NSCommon.RarityLevel;
+      rarity: Common.RarityLevel;
       /**
        * TODO: what is this?
        */

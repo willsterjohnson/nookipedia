@@ -46,7 +46,7 @@ namespace Nookipedia {
       /**
        * The rarity level of this fish.
        */
-      rarity: NSCommon.RarityLevel;
+      rarity: Common.RarityLevel;
       /**
        * TODO: what is this?
        */

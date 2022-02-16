@@ -28,13 +28,13 @@ namespace Nookipedia {
        * and the times during those months when this item can be found.
        */
       availability_array: Array<{
-        months: AppearanceMonths;
-        time: AppearanceTime;
+        months: Months;
+        time: Time;
       }>;
       /**
        * A record of the availability of this item for each month, including unavailable months.
        */
-      times_by_month: Record<Month.IntStringForm, AppearanceTime>;
+      times_by_month: Record<Month.IntStringForm, Time>;
       /**
        * The availability periods of this item in months.
        * Written as a string comprised of TBugMonths-like substrings.
