@@ -6,7 +6,3 @@
 /// <reference path="./month.d.ts" />
 /// <reference path="./utils.d.ts" />
 /// <reference path="./villagers.d.ts" />
-/**
- * @dev add documentation
- * @since 0.3.0
- */
