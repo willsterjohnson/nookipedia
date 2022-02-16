@@ -76,6 +76,12 @@ dotenv.config();
 const nk = new Nookipedia(process.env["NOOKIPEDIA_TOKEN"] as string) as const;
 ```
 
+To use this library's types, you will have to reference the `Nookipedia` namespace.
+
+```html
+/// <reference path="./package/types/index.d.ts" />
+```
+
 ### Error Checking and Type Safety
 
 [To Docs](#docs) | [To Top](#nookipedia)

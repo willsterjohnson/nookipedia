@@ -1,5 +1,18 @@
-/**
- * @dev add documentation
- * @since 0.2.0
- */
-export type MaybeArray<T> = T | Array<T>;
+namespace Nookipedia {
+  /**
+   * @dev add documentation
+   * @since 0.3.0
+   */
+  namespace Utils {
+    /**
+     * @dev add documentation
+     * @since 0.3.0
+     */
+    type MaybeArray<T> = T | Array<T>;
+    /**
+     * @dev add documentation
+     * @since 0.3.0
+     */
+    type AwaitedReturn<T> = Awaited<ReturnType<T>>;
+  }
+}
