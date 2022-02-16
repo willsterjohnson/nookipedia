@@ -9,9 +9,9 @@ const config = {
     },
     package: {
       dir: "package",
-      emitTypes: true,
+      emitTypes: false,
       exports: (f) => !/^_|\/_|\.d\.ts$/.test(f),
-      files: () => true,
+      files: (f) => !/types\//.test(f),
     },
   },
 };
