@@ -1,5 +1,6 @@
 /// <reference path="./types/index.d.ts" />
 import fetch from "node-fetch";
+import NK = Nookipedia;
 
 /**
  * @dev add documentation
@@ -34,11 +35,11 @@ export default class Nookipedia {
   /**
    * @dev add in-house documentation
    * @since 0.1.0
-   * @template {Record<string, any> | Array<Record<string, any>>} T
+   * @template {Record<string, any> | Array<Record<string, any>>} ExpectedType
    * @param {string} endpoint
-   * @returns {Promise<T>}
+   * @returns {Promise<ExpectedType>}
    */
-  async #fetch<T extends Record<string, any> | Array<Record<string, any>>>(endpoint: string): Promise<T> {
+  async #fetch<ExpectedType extends Record<string, any> | Array<Record<string, any>>>(endpoint: string): Promise<ExpectedType> {
     if (this.logUrl) {
       console.log(`\x1b[34m[Nookipedia]\x1b[0m Attempting to fetch data from: \x1b[32m${this.baseURL}${endpoint}\x1b[0m`);
     }
@@ -50,16 +51,16 @@ export default class Nookipedia {
       },
     });
     const stringify = await response.text();
-    return JSON.parse(stringify.replace(/\\u2013/g, "-")) as T;
+    return JSON.parse(stringify.replace(/\\u2013/g, "-")) as ExpectedType;
   }
 
   /**
    * @dev add in-house documentation
    * @since 0.1.0
-   * @param {Record<string, Nookipedia.Utils.MaybeArray<string | number | boolean>>} body
+   * @param {Record<string, NK.Utils.MaybeArray<string | number | boolean>>} body
    * @returns {string}
    */
-  #bodyToParams(body: Record<string, Nookipedia.Utils.MaybeArray<string | number | boolean>>): string {
+  #bodyToParams(body: Record<string, NK.Utils.MaybeArray<string | number | boolean>>): string {
     return Object.keys(body)
       .map((key) => {
         const value = body[key] as typeof body[keyof typeof body];
@@ -76,12 +77,12 @@ export default class Nookipedia {
    * @dev add documentation
    * @since 0.1.0
    * @param {string} apiKey
-   * @param {Nookipedia.Config} [config={}]
-   * @param {Nookipedia.Config["baseURL"]} [config.baseURL]
-   * @param {Nookipedia.Config["apiVersion"]} [config.apiVersion]
-   * @param {Nookipedia.Config["logUrl"]} [config.logUrl]
+   * @param {NK.Config} [config={}]
+   * @param {NK.Config["baseURL"]} [config.baseURL]
+   * @param {NK.Config["apiVersion"]} [config.apiVersion]
+   * @param {NK.Config["logUrl"]} [config.logUrl]
    */
-  constructor(apiKey: string, config: Nookipedia.Common.Config = {}) {
+  constructor(apiKey: string, config: NK.Common.Config = {}) {
     this.#apiKey = apiKey;
     if (config.apiVersion) {
       if (/\d+\.\d+\.\d+/.test(config.apiVersion)) {
@@ -101,27 +102,24 @@ export default class Nookipedia {
   /**
    * @dev add documentation
    * @since 0.1.0
-   * @template {ReturnType<Nookipedia["bugs"]> | ReturnType<Nookipedia["fish"]> | ReturnType<Nookipedia["villagers"]>} T
-   * @param {T} apiResponse
-   * @returns {Promise<Exclude<Awaited<T>, Nookipedia.Error.EndpointError>>}
+   * @template {NK.Utils.AwaitedReturn<Nookipedia["bugs"] | Nookipedia["fish"] | Nookipedia["villagers"]>} ExpectedType
+   * @param {Promise<ExpectedType | NK.Error.EndpointError>} apiResponse
+   * @returns {Promise<Exclude<Awaited<ExpectedType>, NK.Error.EndpointError>>}
    */
-  async checkErrors<T extends ReturnType<Nookipedia["bugs"]> | ReturnType<Nookipedia["fish"]> | ReturnType<Nookipedia["villagers"]>>(
-    apiResponse: T,
-  ): Promise<Exclude<Awaited<T>, Nookipedia.Error.EndpointError>> {
+  async checkErrors<ExpectedType extends NK.Utils.AwaitedReturn<Nookipedia["bugs"] | Nookipedia["fish"] | Nookipedia["villagers"]>>(
+    apiResponse: Promise<ExpectedType | NK.Error.EndpointError>,
+  ): Promise<Exclude<Awaited<ExpectedType>, NK.Error.EndpointError>> {
     const out = await apiResponse;
-    if ("title" in out) {
-      throw new Error(out.title + ": " + out.details);
-    } else {
-      return out as Exclude<Awaited<T>, Nookipedia.Error.EndpointError>;
-    }
+    if ("title" in out) throw new Error(out.title + ": " + out.details);
+    return out as Exclude<Awaited<ExpectedType>, NK.Error.EndpointError>;
   }
 
   /**
    * @dev add in-house documentation
    * @since 0.2.0
-   * @type {Record<Nookipedia.Villager.GameAlt, Nookipedia.Villager.GameActual>}
+   * @type {Record<NK.Villager.GameAlt, NK.Villager.GameActual>}
    */
-  #gameNameAliasMap: Record<Nookipedia.Villager.GameAlt, Nookipedia.Villager.GameActual> = {
+  #gameNameAliasMap: Record<NK.Villager.GameAlt, NK.Villager.GameActual> = {
     "dobutsu no mori": "DNM",
     "animal crossing": "AC",
     "e+": "E_PLUS",
@@ -139,112 +137,85 @@ export default class Nookipedia {
   /**
    * @dev add documentation
    * @since 0.1.0
-   * @param {Nookipedia.Villager.Filter | Nookipedia.Villager.FilterNHDetails | Nookipedia.Villager.FilterExcludeDetails} [filters]
-   * @returns {Promise<Array<Nookipedia.Villager.Schema> | Array<Nookipedia.Villager.SchemaNHDetails> | Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError>}
+   * @param {NK.Villager.Filter | NK.Villager.FilterNHDetails | NK.Villager.FilterExcludeDetails} [filters]
+   * @returns {Promise<Array<NK.Villager.Schema> | Array<NK.Villager.SchemaNHDetails> | Array<NK.Common.SchemaExcludeDetails> | NK.Error.EndpointError>}
    */
   // get villagers
-  async villagers(filters?: Nookipedia.Villager.Filter): Promise<Array<Nookipedia.Villager.Schema> | Nookipedia.Error.EndpointError>;
+  async villagers(filters?: NK.Villager.Filter): Promise<Array<NK.Villager.Schema> | NK.Error.EndpointError>;
   // get villagers + New Horizons details
-  async villagers(
-    filters?: Nookipedia.Villager.FilterNHDetails,
-  ): Promise<Array<Nookipedia.Villager.SchemaNHDetails> | Nookipedia.Error.EndpointError>;
+  async villagers(filters?: NK.Villager.FilterNHDetails): Promise<Array<NK.Villager.SchemaNHDetails> | NK.Error.EndpointError>;
   // get villager names only
-  async villagers(
-    filters?: Nookipedia.Villager.FilterExcludeDetails,
-  ): Promise<Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError>;
+  async villagers(filters?: NK.Villager.FilterExcludeDetails): Promise<Array<NK.Common.SchemaExcludeDetails> | NK.Error.EndpointError>;
   // type safety
   async villagers(
-    filters?: Nookipedia.Villager.Filter | Nookipedia.Villager.FilterNHDetails | Nookipedia.Villager.FilterExcludeDetails,
+    filters?: NK.Villager.Filter | NK.Villager.FilterNHDetails | NK.Villager.FilterExcludeDetails,
   ): Promise<
-    | Array<Nookipedia.Villager.Schema>
-    | Array<Nookipedia.Villager.SchemaNHDetails>
-    | Array<Nookipedia.Common.SchemaExcludeDetails>
-    | Nookipedia.Error.EndpointError
+    Array<NK.Villager.Schema> | Array<NK.Villager.SchemaNHDetails> | Array<NK.Common.SchemaExcludeDetails> | NK.Error.EndpointError
   >;
   // implementation
   async villagers(
-    filters?: Nookipedia.Villager.Filter | Nookipedia.Villager.FilterNHDetails | Nookipedia.Villager.FilterExcludeDetails,
+    filters?: NK.Villager.Filter | NK.Villager.FilterNHDetails | NK.Villager.FilterExcludeDetails,
   ): Promise<
-    | Array<Nookipedia.Villager.Schema>
-    | Array<Nookipedia.Villager.SchemaNHDetails>
-    | Array<Nookipedia.Common.SchemaExcludeDetails>
-    | Nookipedia.Error.EndpointError
+    Array<NK.Villager.Schema> | Array<NK.Villager.SchemaNHDetails> | Array<NK.Common.SchemaExcludeDetails> | NK.Error.EndpointError
   > {
     if (filters) {
       let games = Array.isArray(filters.game) ? filters.game : filters.game ? [filters.game] : [];
       filters.game = games.map((game) => {
         if (game in this.#gameNameAliasMap) {
-          game = this.#gameNameAliasMap[game as Nookipedia.Villager.GameAlt];
+          game = this.#gameNameAliasMap[game as NK.Villager.GameAlt];
         }
         return game;
       });
     }
     const endpoint = "villagers?" + this.#bodyToParams(filters ?? {});
-    return await this.#fetch<
-      | Array<Nookipedia.Villager.Schema>
-      | Array<Nookipedia.Villager.SchemaNHDetails>
-      | Array<Nookipedia.Common.SchemaExcludeDetails>
-      | Nookipedia.Error.EndpointError
-    >(endpoint);
+    return await this.#fetch<NK.Utils.AwaitedReturn<Nookipedia["villagers"]>>(endpoint);
   }
 
   /**
    * @dev add documentation
    * @since 0.2.0
-   * @param {Nookipedia.Fish.FilterSingle | Nookipedia.Fish.FilterMany | Nookipedia.Fish.FilterExcludeDetails} [filters]
-   * @returns {Promise<Nookipedia.Fish.Schema | Array<Nookipedia.Fish.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError>}
+   * @param {NK.Fish.FilterSingle | NK.Fish.FilterMany | NK.Fish.FilterExcludeDetails} [filters]
+   * @returns {Promise<NK.Utils.MaybeArray<NK.Fish.Schema> | Array<NK.Common.SchemaExcludeDetails> | NK.Error.EndpointError>}
    */
   // get one fish
-  async fish(filters: Nookipedia.Fish.FilterSingle): Promise<Nookipedia.Fish.Schema | Nookipedia.Error.EndpointError>;
+  async fish(filters: NK.Fish.FilterSingle): Promise<NK.Fish.Schema | NK.Error.EndpointError>;
   // get many fish
-  async fish(filters?: Nookipedia.Fish.FilterMany): Promise<Array<Nookipedia.Fish.Schema> | Nookipedia.Error.EndpointError>;
+  async fish(filters?: NK.Fish.FilterMany): Promise<Array<NK.Fish.Schema> | NK.Error.EndpointError>;
   // get many fish names only
-  async fish(
-    filters?: Nookipedia.Fish.FilterExcludeDetails,
-  ): Promise<Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError>;
+  async fish(filters?: NK.Fish.FilterExcludeDetails): Promise<Array<NK.Common.SchemaExcludeDetails> | NK.Error.EndpointError>;
   // type safety
   async fish(
-    filters?: Nookipedia.Fish.FilterSingle | Nookipedia.Fish.FilterMany | Nookipedia.Fish.FilterExcludeDetails,
-  ): Promise<
-    Nookipedia.Fish.Schema | Array<Nookipedia.Fish.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError
-  >;
+    filters?: NK.Fish.FilterSingle | NK.Fish.FilterMany | NK.Fish.FilterExcludeDetails,
+  ): Promise<NK.Utils.MaybeArray<NK.Fish.Schema> | Array<NK.Common.SchemaExcludeDetails> | NK.Error.EndpointError>;
   // implementation
   async fish(
-    filters?: Nookipedia.Fish.FilterSingle | Nookipedia.Fish.FilterMany | Nookipedia.Fish.FilterExcludeDetails,
-  ): Promise<
-    Nookipedia.Fish.Schema | Array<Nookipedia.Fish.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError
-  > {
+    filters?: NK.Fish.FilterSingle | NK.Fish.FilterMany | NK.Fish.FilterExcludeDetails,
+  ): Promise<NK.Utils.MaybeArray<NK.Fish.Schema> | Array<NK.Common.SchemaExcludeDetails> | NK.Error.EndpointError> {
     const endpoint = `/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?${this.#bodyToParams(filters ?? {})}`;
-    return await this.#fetch<Array<Nookipedia.Fish.Schema> | Nookipedia.Fish.Schema | Nookipedia.Error.EndpointError>(endpoint);
+    return await this.#fetch<NK.Utils.AwaitedReturn<Nookipedia["fish"]>>(endpoint);
   }
 
   /**
    * @dev add documentation
    * @since 0.2.0
-   * @param {Nookipedia.Bug.FilterSingle | Nookipedia.Bug.FilterMany | Nookipedia.Bug.FilterExcludeDetails} [filters]
-   * @returns {Promise<Nookipedia.Bug.Schema | Array<Nookipedia.Bug.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError>}
+   * @param {NK.Bug.FilterSingle | NK.Bug.FilterMany | NK.Bug.FilterExcludeDetails} [filters]
+   * @returns {Promise<NK.Bug.Schema | Array<NK.Bug.Schema> | Array<NK.Common.SchemaExcludeDetails> | NK.Error.EndpointError>}
    */
   // get one bug
-  async bugs(filters: Nookipedia.Bug.FilterSingle): Promise<Nookipedia.Bug.Schema | Nookipedia.Error.EndpointError>;
+  async bugs(filters: NK.Bug.FilterSingle): Promise<NK.Bug.Schema | NK.Error.EndpointError>;
   // get many bugs
-  async bugs(filters?: Nookipedia.Bug.FilterMany): Promise<Array<Nookipedia.Bug.Schema> | Nookipedia.Error.EndpointError>;
+  async bugs(filters?: NK.Bug.FilterMany): Promise<Array<NK.Bug.Schema> | NK.Error.EndpointError>;
   // get many bugs names only
-  async bugs(
-    filters?: Nookipedia.Bug.FilterExcludeDetails,
-  ): Promise<Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError>;
+  async bugs(filters?: NK.Bug.FilterExcludeDetails): Promise<Array<NK.Common.SchemaExcludeDetails> | NK.Error.EndpointError>;
   // type safety
   async bugs(
-    filters?: Nookipedia.Bug.FilterSingle | Nookipedia.Bug.FilterMany | Nookipedia.Bug.FilterExcludeDetails,
-  ): Promise<
-    Nookipedia.Bug.Schema | Array<Nookipedia.Bug.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError
-  >;
+    filters?: NK.Bug.FilterSingle | NK.Bug.FilterMany | NK.Bug.FilterExcludeDetails,
+  ): Promise<NK.Bug.Schema | Array<NK.Bug.Schema> | Array<NK.Common.SchemaExcludeDetails> | NK.Error.EndpointError>;
   // implementation
   async bugs(
-    filters?: Nookipedia.Bug.FilterSingle | Nookipedia.Bug.FilterMany | Nookipedia.Bug.FilterExcludeDetails,
-  ): Promise<
-    Nookipedia.Bug.Schema | Array<Nookipedia.Bug.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError
-  > {
+    filters?: NK.Bug.FilterSingle | NK.Bug.FilterMany | NK.Bug.FilterExcludeDetails,
+  ): Promise<NK.Bug.Schema | Array<NK.Bug.Schema> | Array<NK.Common.SchemaExcludeDetails> | NK.Error.EndpointError> {
     const endpoint = `/nh/bugs${filters && "bug" in filters ? `/${filters.bug}` : ""}?${this.#bodyToParams(filters ?? {})}`;
-    return await this.#fetch<Array<Nookipedia.Bug.Schema> | Nookipedia.Bug.Schema | Nookipedia.Error.EndpointError>(endpoint);
+    return await this.#fetch<NK.Utils.AwaitedReturn<Nookipedia["bugs"]>>(endpoint);
   }
 }
