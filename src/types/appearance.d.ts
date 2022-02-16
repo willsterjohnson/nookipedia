@@ -9,7 +9,7 @@ namespace Nookipedia {
      * @since 0.3.0
      * @example "4 PM – 9 AM"
      */
-    type Time = "NA" | "All day" | `${NSCommon.ValidHour} ${"AM" | "PM"} - ${NSCommon.ValidHour} ${"AM" | "PM"}`;
+    type Time = "NA" | "All day" | `${Common.ValidHour} ${"AM" | "PM"} - ${Common.ValidHour} ${"AM" | "PM"}`;
 
     /**
      * @dev add documentation
