@@ -78,8 +78,10 @@ const nk = new Nookipedia(process.env["NOOKIPEDIA_TOKEN"] as string) as const;
 
 To use this library's types, you will have to reference the `Nookipedia` namespace.
 
-```html
-/// <reference path="./package/types/index.d.ts" />
+```ts
+/// <reference types="@willsterjohnson/nookipedia/types" />
+
+let villagers: Nookipedia.Villager.Schema[] = await nk.villagers();
 ```
 
 ### Error Checking and Type Safety
@@ -88,10 +90,14 @@ To use this library's types, you will have to reference the `Nookipedia` namespa
 
 To check that the API didn't respond with and error, and (for TypeScript users) to remove the error type from the response, use the `checkErrors` method.
 
+The generic type is optional, however it may be useful for type safety, enforcing a specific type is returned rather than allowing any valid schema which isn't an endpoint error.
+
 ```ts
-const errorCheckedAllVillagers = await nk.checkErrors(nk.villagers());
-const errorCheckedFishByName = await nk.checkErrors(nk.fish({ fish: "Cherry Salmon" }));
-const errorCheckedBugNamesOnly = await nk.checkErrors(nk.bugs({ excludedetails: true }));
+const errorCheckedAllVillagers = await nk.checkErrors<Array<Nookipedia.Villager.Schema>>(nk.villagers());
+const errorCheckedFishByName = await nk.checkErrors<Nookipedia.Fish.Schema>(nk.fish({ fish: "Cherry Salmon" }));
+const errorCheckedBugNamesOnly = await nk.checkErrors<Array<Nookipedia.Common.SchemaExcludeDetails>>(
+  nk.bugs({ excludedetails: true }),
+);
 ```
 
 Note that only the `nk.checkErrors` method needs to be awaited, the endpoint method passed in will be awaited automatically.
@@ -104,11 +110,13 @@ If there is an error, the `nk.checkErrors` method will throw an error with the A
 
 To make queries to the [Villagers endpoint](https://api.nookipedia.com/doc#/paths/~1villagers/get), use the `villagers` method.
 
+The generic type is optional, however it may be useful for type safety, enforcing a specific type is returned rather than allowing any valid schema. Note that the return type will be `Promise<ExpectedType | EndpointError>`, so error checking may be necessary.
+
 ```ts
-const allVillagers = await nk.villagers();
-const villagerByName = await nk.villagers({ name: "Ribbot" });
-const villagerNamesOnly = await nk.villagers({ excludedetails: true });
-const villagerExtraDetails = await nk.villagers({ nhdetails: true });
+const allVillagers = await nk.villagers<Array<Nookipedia.Villager.Schema>>();
+const villagerByName = await nk.villagers<Array<Nookipedia.Villager.Schema>>({ name: "Ribbot" });
+const villagerNamesOnly = await nk.villagers<Array<Nookipedia.Common.SchemaExcludeDetails>>({ excludedetails: true });
+const villagerExtraDetails = await nk.villagers<Array<Nookipedia.Villager.SchemaNHDetails>>({ nhdetails: true });
 ```
 
 For a full list of paramaters, see either the TypeScript definition file or the official API docs.
@@ -131,10 +139,12 @@ All Valid options are listed below;
 
 To make queries to the Fish endpoints ([all](https://api.nookipedia.com/doc#/paths/~1nh~1fish/get), [single](https://api.nookipedia.com/doc#/paths/~1nh~1fish~1{fish}/get)), use the `fish` method.
 
+The generic type is optional, however it may be useful for type safety, enforcing a specific type is returned rather than allowing any valid schema. Note that the return type will be `Promise<ExpectedType | EndpointError>`, so error checking may be necessary.
+
 ```ts
-const allFish = await nk.fish();
-const fishByName = await nk.fish({ fish: "Cherry Salmon" });
-const fishNamesOnly = await nk.fish({ excludedetails: true });
+const allFish = await nk.fish<Array<Nookipedia.Fish.Schema>>();
+const fishByName = await nk.fish<Nookipedia.Fish.Schema>({ fish: "Cherry Salmon" });
+const fishNamesOnly = await nk.fish<Array<Nookipedia.Common.SchemaExcludeDetails>>({ excludedetails: true });
 ```
 
 For a full list of paramaters, see either the TypeScript definition file or the official API docs.
@@ -145,10 +155,12 @@ For a full list of paramaters, see either the TypeScript definition file or the 
 
 o make queries to the Bugs endpoints ([all](https://api.nookipedia.com/doc#/paths/~1nh~1bugs/get), [single](https://api.nookipedia.com/doc#/paths/~1nh~1bugs~1{bug}/get)), use the `fish` method.
 
+The generic type is optional, however it may be useful for type safety, enforcing a specific type is returned rather than allowing any valid schema. Note that the return type will be `Promise<ExpectedType | EndpointError>`, so error checking may be necessary.
+
 ```ts
-const allBugs = await nk.bugs();
-const bugByName = await nk.bugs({ bug: "Grasshopper" });
-const bugNamesOnly = await nk.bugs({ excludedetails: true });
+const allBugs = await nk.bugs<Array<Nookipedia.Bug.Schema>>();
+const bugByName = await nk.bugs<Nookipedia.Bug.Schema>({ bug: "Grasshopper" });
+const bugNamesOnly = await nk.bugs<Array<Nookipedia.Common.SchemaExcludeDetails>>({ excludedetails: true });
 ```
 
 For a full list of paramaters, see either the TypeScript definition file or the official API docs.
