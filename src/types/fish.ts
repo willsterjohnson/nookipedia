@@ -3,6 +3,7 @@ declare namespace Nookipedia.Fish {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Schema = {
     /**
@@ -80,6 +81,7 @@ declare namespace Nookipedia.Fish {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type FilterSingle = {
     /**
@@ -100,6 +102,7 @@ declare namespace Nookipedia.Fish {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type FilterMany = {
     /**
@@ -128,6 +131,7 @@ declare namespace Nookipedia.Fish {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type FilterExcludeDetails = FilterMany & {
     /**

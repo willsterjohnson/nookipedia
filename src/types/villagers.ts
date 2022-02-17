@@ -3,6 +3,7 @@ declare namespace Nookipedia.Villager {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Species =
     | "Alligator"
@@ -79,12 +80,14 @@ declare namespace Nookipedia.Villager {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type GameActual = "DNM" | "AC" | "E_PLUS" | "WW" | "CF" | "NL" | "WA" | "NH" | "FILM" | "HHD" | "PC";
 
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type GameAlt =
     | "dobutsu no mori"
@@ -104,12 +107,14 @@ declare namespace Nookipedia.Villager {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Game = GameActual | GameAlt;
 
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Personality =
     | "Lazy"
@@ -132,6 +137,7 @@ declare namespace Nookipedia.Villager {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Birthday =
     | "1"
@@ -200,6 +206,7 @@ declare namespace Nookipedia.Villager {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type StarSign =
     | "Aries"
@@ -231,6 +238,7 @@ declare namespace Nookipedia.Villager {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Schema = {
     /**
@@ -320,6 +328,7 @@ declare namespace Nookipedia.Villager {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type SchemaNHDetails = Schema & {
     nh_details: {
@@ -397,6 +406,7 @@ declare namespace Nookipedia.Villager {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Filter = {
     /**
@@ -448,6 +458,7 @@ declare namespace Nookipedia.Villager {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type FilterExcludeDetails = Filter & {
     /**
@@ -469,6 +480,7 @@ declare namespace Nookipedia.Villager {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type FilterNHDetails = Filter & {
     /**

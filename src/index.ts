@@ -3,40 +3,53 @@ import fetch from "node-fetch";
 
 /**
  * @dev add documentation
+ * @param {string} apiKey
+ * @param {Nookipedia.Common.Config} [config={}]
+ * @param {Nookipedia.Common.Config["baseURL"]} [config.baseURL]
+ * @param {Nookipedia.Common.Config["apiVersion"]} [config.apiVersion]
+ * @param {Nookipedia.Common.Config["logUrl"]} [config.logUrl]
  * @since 0.1.0
+ * @author Will 'Willster' Johnson (@willster277)
  */
 export default class NookipediaClass {
-  /**
-   * @dev add in-house documentation
-   * @since 0.1.0
-   * @type {string}
-   */
-  #apiKey: string;
-  /**
-   * @dev add documentation
-   * @since 0.1.0
-   * @type {string}
-   */
-  baseURL: string = "https://api.nookipedia.com/";
-  /**
-   * @dev add documentation
-   * @since 0.1.0
-   * @type {string}
-   */
-  apiVersion: string = "1.5.0";
-  /**
-   * @dev add documentation
-   * @since 0.2.0
-   * @type {boolean}
-   */
-  logUrl: boolean = false;
+  constructor(apiKey: string, config: Nookipedia.Common.Config = {}) {
+    this.#apiKey = apiKey;
+    if (config.apiVersion) {
+      if (/\d+\.\d+\.\d+/.test(config.apiVersion)) {
+        this.apiVersion = config.apiVersion;
+      } else {
+        throw new Error("Nookipedia: API version must be a valid version number.");
+      }
+    }
+    if (config.baseURL) {
+      this.baseURL = config.baseURL.endsWith("/") ? config.baseURL : config.baseURL + "/";
+    }
+    if (config.logUrl) {
+      this.logUrl = config.logUrl;
+    }
+  }
+
+  // ###########################################################################################################################
+  // ###########################################################################################################################
+  // ######################################################### PRIVATE #########################################################
+  // ###########################################################################################################################
+  // ###########################################################################################################################
 
   /**
    * @dev add in-house documentation
+   * @type {string}
    * @since 0.1.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
+  #apiKey: string;
+
+  /**
+   * @dev add in-house documentation
    * @template {Nookipedia.Utils.MaybeArray<Record<string, any>>} ExpectedType
    * @param {string} endpoint
    * @returns {Promise<ExpectedType>}
+   * @since 0.1.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   async #fetch<ExpectedType extends Nookipedia.Utils.MaybeArray<Record<string, any>>>(endpoint: string): Promise<ExpectedType> {
     if (this.logUrl) {
@@ -55,14 +68,14 @@ export default class NookipediaClass {
 
   /**
    * @dev add in-house documentation
-   * @since 0.1.0
    * @param {Record<string, Nookipedia.Utils.MaybeArray<string | number | boolean>>} body
    * @returns {string}
+   * @since 0.1.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   #bodyToParams(body: Record<string, Nookipedia.Utils.MaybeArray<string | number | boolean>>): string {
-    return Object.keys(body)
-      .map((key) => {
-        const value = body[key] as typeof body[keyof typeof body];
+    return Object.entries(body)
+      .map(([key, value]) => {
         if (Array.isArray(value)) {
           return value.map((item) => `${key}=${encodeURIComponent(item)}`).join("&");
         } else {
@@ -72,38 +85,41 @@ export default class NookipediaClass {
       .join("&");
   }
 
-  /**
-   * @dev add documentation
-   * @since 0.1.0
-   * @param {string} apiKey
-   * @param {Nookipedia.Common.Config} [config={}]
-   * @param {Nookipedia.Common.Config["baseURL"]} [config.baseURL]
-   * @param {Nookipedia.Common.Config["apiVersion"]} [config.apiVersion]
-   * @param {Nookipedia.Common.Config["logUrl"]} [config.logUrl]
-   */
-  constructor(apiKey: string, config: Nookipedia.Common.Config = {}) {
-    this.#apiKey = apiKey;
-    if (config.apiVersion) {
-      if (/\d+\.\d+\.\d+/.test(config.apiVersion)) {
-        this.apiVersion = config.apiVersion;
-      } else {
-        throw new Error("Nookipedia: API version must be a valid version number.");
-      }
-    }
-    if (config.baseURL) {
-      this.baseURL = config.baseURL.endsWith("/") ? config.baseURL : config.baseURL + "/";
-    }
-    if (config.logUrl) {
-      this.logUrl = config.logUrl;
-    }
-  }
+  // ############################################################################################################################
+  // ############################################################################################################################
+  // ########################################################## PUBLIC ##########################################################
+  // ############################################################################################################################
+  // ############################################################################################################################
 
   /**
    * @dev add documentation
+   * @type {string}
    * @since 0.1.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
+  baseURL: string = "https://api.nookipedia.com/";
+  /**
+   * @dev add documentation
+   * @type {string}
+   * @since 0.1.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
+  apiVersion: string = "1.5.0";
+  /**
+   * @dev add documentation
+   * @type {boolean}
+   * @since 0.2.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
+  logUrl: boolean = false;
+
+  /**
+   * @dev add documentation
    * @template {Nookipedia.Utils.AwaitedReturn<NookipediaClass["bugs"] | NookipediaClass["fish"] | NookipediaClass["villagers"]>} ExpectedType
    * @param {Promise<ExpectedType | Nookipedia.Error.EndpointError>} apiResponse
    * @returns {Promise<Exclude<Awaited<ExpectedType>, Nookipedia.Error.EndpointError>>}
+   * @since 0.1.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   async checkErrors<
     ExpectedType extends Nookipedia.Utils.AwaitedReturn<
@@ -119,8 +135,9 @@ export default class NookipediaClass {
 
   /**
    * @dev add in-house documentation
-   * @since 0.2.0
    * @type {Record<Nookipedia.Villager.GameAlt, Nookipedia.Villager.GameActual>}
+   * @since 0.2.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   #gameNameAliasMap: Record<Nookipedia.Villager.GameAlt, Nookipedia.Villager.GameActual> = {
     "dobutsu no mori": "DNM",
@@ -139,10 +156,11 @@ export default class NookipediaClass {
   };
   /**
    * @dev add documentation
-   * @since 0.1.0
    * @template {Array<Nookipedia.Villager.Schema> | Array<Nookipedia.Villager.SchemaNHDetails> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
    * @param {Nookipedia.Villager.Filter | Nookipedia.Villager.FilterNHDetails | Nookipedia.Villager.FilterExcludeDetails} [filters]
    * @returns {Promise<ExpectedType | Nookipedia.Error.EndpointError>}
+   * @since 0.1.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   // get villagers
   async villagers<ExpectedType extends Array<Nookipedia.Villager.Schema> = Array<Nookipedia.Villager.Schema>>(
@@ -196,10 +214,11 @@ export default class NookipediaClass {
 
   /**
    * @dev add documentation
-   * @since 0.2.0
    * @template {Nookipedia.Utils.MaybeArray<Nookipedia.Fish.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
    * @param {Nookipedia.Fish.FilterSingle | Nookipedia.Fish.FilterMany | Nookipedia.Fish.FilterExcludeDetails} [filters]
    * @returns {ExpectedType | Nookipedia.Error.EndpointError>}
+   * @since 0.2.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   // get one fish
   async fish<ExpectedType extends Nookipedia.Fish.Schema = Nookipedia.Fish.Schema>(
@@ -235,10 +254,11 @@ export default class NookipediaClass {
 
   /**
    * @dev add documentation
-   * @since 0.2.0
    * @template {Nookipedia.Utils.MaybeArray<Nookipedia.Bug.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
    * @param {Nookipedia.Bug.FilterSingle | Nookipedia.Bug.FilterMany | Nookipedia.Bug.FilterExcludeDetails} [filters]
    * @returns {Promise<ExpectedType | Nookipedia.Error.EndpointError>}
+   * @since 0.2.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   // get one bug
   async bugs<ExpectedType extends Nookipedia.Bug.Schema = Nookipedia.Bug.Schema>(

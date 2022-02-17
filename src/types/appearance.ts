@@ -2,21 +2,24 @@
 declare namespace Nookipedia.Appearance {
   /**
    * @dev add documentation
-   * @since 0.3.0
    * @example "4 PM – 9 AM"
+   * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Time = "NA" | "All day" | `${Common.ValidHour} ${"AM" | "PM"} - ${Common.ValidHour} ${"AM" | "PM"}`;
 
   /**
    * @dev add documentation
-   * @since 0.3.0
    * @example "Sep – Dec"
+   * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Months = `${Month.Shortform} - ${Month.Shortform}`;
 
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type HemisphereInfo = {
     /**

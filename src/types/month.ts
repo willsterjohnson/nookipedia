@@ -3,6 +3,7 @@ declare namespace Nookipedia.Month {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Shortform =
     | "Jan"
@@ -33,6 +34,7 @@ declare namespace Nookipedia.Month {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Longform =
     | "January"
@@ -63,30 +65,35 @@ declare namespace Nookipedia.Month {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type IntegerForm = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type IntStringForm = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12";
 
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type NumStringForm = "01" | "02" | "03" | "04" | "05" | "06" | "07" | "08" | "09" | "10" | "11" | "12";
 
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type NumericForm = IntegerForm | IntStringForm | NumStringForm;
 
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Valid = Shortform | Longform | NumericForm;
 }

@@ -3,6 +3,7 @@ declare namespace Nookipedia.Common {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type Config = {
     baseURL?: string;
@@ -12,6 +13,7 @@ declare namespace Nookipedia.Common {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type RarityLevel =
     | ""
@@ -35,12 +37,14 @@ declare namespace Nookipedia.Common {
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type ValidHour = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
   /**
    * @dev add documentation
    * @since 0.3.0
+   * @author Will 'Willster' Johnson (@willster277)
    */
   type SchemaExcludeDetails = string;
 }
