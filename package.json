@@ -7,7 +7,7 @@
   "scripts": {
     "prettier:check": "prettier --ignore-path .prettierignore --check --plugin-search-dir=. .",
     "prettier:write": "prettier --ignore-path .prettierignore --write --plugin-search-dir=. .",
-    "package": "svelte-kit package && tsc -p ./tsconfig.declaration.json && node scripts/index.mjs && npm run prettier:write",
+    "package": "svelte-kit package && tsc -p ./tsconfig.declaration.json && node scripts/index.js && npm run prettier:write",
     "test": "mocha --loader=ts-node/esm --experimental-specifier-resolution=node --timeout=30000 test/**/*.spec.ts"
   },
   "": "Weird Dev Environment, right?",
@@ -20,7 +20,6 @@
     "dotenv": "^16.0.0",
     "mocha": "^9.2.0",
     "prettier": "^2.4.1",
-    "prettier-plugin-svelte": "^2.4.0",
     "svelte2tsx": "^0.5.2",
     "ts-node": "^10.5.0",
     "tslib": "^2.3.1",

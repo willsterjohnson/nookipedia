@@ -34,11 +34,11 @@ export default class NookipediaClass {
   /**
    * @dev add in-house documentation
    * @since 0.1.0
-   * @template {Record<string, any> | Array<Record<string, any>>} ExpectedType
+   * @template {Nookipedia.Utils.MaybeArray<Record<string, any>>} ExpectedType
    * @param {string} endpoint
    * @returns {Promise<ExpectedType>}
    */
-  async #fetch<ExpectedType extends Record<string, any> | Array<Record<string, any>>>(endpoint: string): Promise<ExpectedType> {
+  async #fetch<ExpectedType extends Nookipedia.Utils.MaybeArray<Record<string, any>>>(endpoint: string): Promise<ExpectedType> {
     if (this.logUrl) {
       console.log(`\x1b[34m[Nookipedia]\x1b[0m Attempting to fetch data from: \x1b[32m${this.baseURL}${endpoint}\x1b[0m`);
     }
@@ -140,8 +140,9 @@ export default class NookipediaClass {
   /**
    * @dev add documentation
    * @since 0.1.0
+   * @template {Array<Nookipedia.Villager.Schema> | Array<Nookipedia.Villager.SchemaNHDetails> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
    * @param {Nookipedia.Villager.Filter | Nookipedia.Villager.FilterNHDetails | Nookipedia.Villager.FilterExcludeDetails} [filters]
-   * @returns {Promise<Array<Nookipedia.Villager.Schema> | Array<Nookipedia.Villager.SchemaNHDetails> | Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError>}
+   * @returns {Promise<ExpectedType | Nookipedia.Error.EndpointError>}
    */
   // get villagers
   async villagers<ExpectedType extends Array<Nookipedia.Villager.Schema> = Array<Nookipedia.Villager.Schema>>(
@@ -196,8 +197,9 @@ export default class NookipediaClass {
   /**
    * @dev add documentation
    * @since 0.2.0
+   * @template {Nookipedia.Utils.MaybeArray<Nookipedia.Fish.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
    * @param {Nookipedia.Fish.FilterSingle | Nookipedia.Fish.FilterMany | Nookipedia.Fish.FilterExcludeDetails} [filters]
-   * @returns {Promise<Nookipedia.Utils.MaybeArray<Nookipedia.Fish.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError>}
+   * @returns {ExpectedType | Nookipedia.Error.EndpointError>}
    */
   // get one fish
   async fish<ExpectedType extends Nookipedia.Fish.Schema = Nookipedia.Fish.Schema>(
@@ -234,8 +236,9 @@ export default class NookipediaClass {
   /**
    * @dev add documentation
    * @since 0.2.0
+   * @template {Nookipedia.Utils.MaybeArray<Nookipedia.Bug.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
    * @param {Nookipedia.Bug.FilterSingle | Nookipedia.Bug.FilterMany | Nookipedia.Bug.FilterExcludeDetails} [filters]
-   * @returns {Promise<Nookipedia.Bug.Schema | Array<Nookipedia.Bug.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails> | Nookipedia.Error.EndpointError>}
+   * @returns {Promise<ExpectedType | Nookipedia.Error.EndpointError>}
    */
   // get one bug
   async bugs<ExpectedType extends Nookipedia.Bug.Schema = Nookipedia.Bug.Schema>(

@@ -9,18 +9,18 @@ declare namespace Nookipedia.Common {
     apiVersion?: string;
     logUrl?: boolean;
   };
-  /** TODO: complete this type */
   /**
    * @dev add documentation
    * @since 0.3.0
    */
   type RarityLevel =
-    | string
     | ""
     | "Unknown"
     | "unknown"
     | "Very Common"
+    | "very Common"
     | "Very common"
+    | "very common"
     | "Common"
     | "common"
     | "Uncommon"
@@ -28,7 +28,9 @@ declare namespace Nookipedia.Common {
     | "Rare"
     | "rare"
     | "Very Rare"
-    | "Very rare";
+    | "very Rare"
+    | "Very rare"
+    | "very rare";
 
   /**
    * @dev add documentation

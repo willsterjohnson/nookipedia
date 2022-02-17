@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import devTodo from "./dev-todo.mjs";
-import fixThisPlease from "./fix-this-please.mjs";
+import devTodo from "./dev-todo.js";
+import fixThisPlease from "./fix-this-please.js";
 
 /** @type {Array<(contents: string) => string>} */
 const actions = [devTodo, fixThisPlease];

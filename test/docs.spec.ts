@@ -1,4 +1,4 @@
-/// <reference path="../src/types/index.d.ts" />
+/// <reference path="../src/types/index.ts" />
 
 import "mocha";
 import Nookipedia from "../src";
