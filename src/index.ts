@@ -45,6 +45,28 @@ export default class NookipediaClass {
 
   /**
    * @dev add in-house documentation
+   * @type {Record<Nookipedia.Villager.GameAlt, Nookipedia.Villager.GameActual>}
+   * @since 0.2.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
+  #gameNameAliasMap: Record<Nookipedia.Villager.GameAlt, Nookipedia.Villager.GameActual> = {
+    "dobutsu no mori": "DNM",
+    "animal crossing": "AC",
+    "e+": "E_PLUS",
+    "dobutsu no mori e+": "E_PLUS",
+    "wild world": "WW",
+    "city folk": "CF",
+    "new leaf": "NL",
+    "welcome amiibo": "WA",
+    "new horizons": "NH",
+    "dobutsu no mori film": "FILM",
+    "gekijoban dobutsu no mori": "FILM",
+    "happy home designer": "HHD",
+    "pocket camp": "PC",
+  };
+
+  /**
+   * @dev add in-house documentation
    * @template {Nookipedia.Utils.MaybeArray<Record<string, any>>} ExpectedType
    * @param {string} endpoint
    * @returns {Promise<ExpectedType>}
@@ -91,6 +113,10 @@ export default class NookipediaClass {
   // ############################################################################################################################
   // ############################################################################################################################
 
+  // ############################################################################################################################
+  // ########################################################### MISC ###########################################################
+  // ############################################################################################################################
+
   /**
    * @dev add documentation
    * @type {string}
@@ -133,27 +159,10 @@ export default class NookipediaClass {
     return out as Exclude<Awaited<ExpectedType>, Nookipedia.Error.EndpointError>;
   }
 
-  /**
-   * @dev add in-house documentation
-   * @type {Record<Nookipedia.Villager.GameAlt, Nookipedia.Villager.GameActual>}
-   * @since 0.2.0
-   * @author Will 'Willster' Johnson (@willster277)
-   */
-  #gameNameAliasMap: Record<Nookipedia.Villager.GameAlt, Nookipedia.Villager.GameActual> = {
-    "dobutsu no mori": "DNM",
-    "animal crossing": "AC",
-    "e+": "E_PLUS",
-    "dobutsu no mori e+": "E_PLUS",
-    "wild world": "WW",
-    "city folk": "CF",
-    "new leaf": "NL",
-    "welcome amiibo": "WA",
-    "new horizons": "NH",
-    "dobutsu no mori film": "FILM",
-    "gekijoban dobutsu no mori": "FILM",
-    "happy home designer": "HHD",
-    "pocket camp": "PC",
-  };
+  // ############################################################################################################################
+  // ######################################################### ENDPOINT #########################################################
+  // ############################################################################################################################
+
   /**
    * @dev add documentation
    * @template {Array<Nookipedia.Villager.Schema> | Array<Nookipedia.Villager.SchemaNHDetails> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
@@ -291,4 +300,24 @@ export default class NookipediaClass {
     const endpoint = `/nh/bugs${filters && "bug" in filters ? `/${filters.bug}` : ""}?${this.#bodyToParams(filters ?? {})}`;
     return await this.#fetch<ExpectedType | Nookipedia.Error.EndpointError>(endpoint);
   }
+
+  // async seaCreatures() {};
+  async events() {};
+  // async art() {};
+  // async furniture() {};
+  // async clothing() {};
+  // async interior() {};
+  // async tools() {};
+  // async photos() {};
+  // async items() {};
+  // async recipes() {};
+  // async fossils() {};
+  // async fossilGroups() {};
+  // async allFossils() {};
+
+  // ############################################################################################################################
+  // ######################################################### ABSTRACT #########################################################
+  // ############################################################################################################################
+
+  async today() {};
 }
