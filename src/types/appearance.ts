@@ -6,7 +6,7 @@ declare namespace Nookipedia.Appearance {
    * @since 0.3.0
    * @author Will 'Willster' Johnson (@willster277)
    */
-  type Time = "NA" | "All day" | `${Common.ValidHour} ${"AM" | "PM"} - ${Common.ValidHour} ${"AM" | "PM"}`;
+  type Time = "NA" | "All day" | `${Month.ValidHour} ${"AM" | "PM"} - ${Month.ValidHour} ${"AM" | "PM"}`;
 
   /**
    * @dev add documentation

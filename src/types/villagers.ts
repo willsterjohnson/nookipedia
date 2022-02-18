@@ -139,75 +139,6 @@ declare namespace Nookipedia.Villager {
    * @since 0.3.0
    * @author Will 'Willster' Johnson (@willster277)
    */
-  type Birthday =
-    | "1"
-    | 1
-    | "2"
-    | 2
-    | "3"
-    | 3
-    | "4"
-    | 4
-    | "5"
-    | 5
-    | "6"
-    | 6
-    | "7"
-    | 7
-    | "8"
-    | 8
-    | "9"
-    | 9
-    | "10"
-    | 10
-    | "11"
-    | 11
-    | "12"
-    | 12
-    | "13"
-    | 13
-    | "14"
-    | 14
-    | "15"
-    | 15
-    | "16"
-    | 16
-    | "17"
-    | 17
-    | "18"
-    | 18
-    | "19"
-    | 19
-    | "20"
-    | 20
-    | "21"
-    | 21
-    | "22"
-    | 22
-    | "23"
-    | 23
-    | "24"
-    | 24
-    | "25"
-    | 25
-    | "26"
-    | 26
-    | "27"
-    | 27
-    | "28"
-    | 28
-    | "29"
-    | 29
-    | "30"
-    | 30
-    | "31"
-    | 31;
-
-  /**
-   * @dev add documentation
-   * @since 0.3.0
-   * @author Will 'Willster' Johnson (@willster277)
-   */
   type StarSign =
     | "Aries"
     | "aries"
@@ -289,7 +220,7 @@ declare namespace Nookipedia.Villager {
     /**
      * Villager's birthday day
      */
-    birthday_day: Birthday;
+    birthday_day: Month.Day;
     /**
      * Villager's star sign
      */
@@ -311,7 +242,7 @@ declare namespace Nookipedia.Villager {
      */
     clothing: string;
     /**
-     * Is Villager an islander?
+     * @see https://nookipedia.com/wiki/Islander
      */
     islander: boolean;
     /**
@@ -443,7 +374,7 @@ declare namespace Nookipedia.Villager {
     /**
      * Use with birthmonth to get villager(s) born on a specific day.
      */
-    birthday?: Birthday;
+    birthday?: Month.Day;
     /**
      * Specify the desired width of returned image URLs.
      *
