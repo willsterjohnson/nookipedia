@@ -22,7 +22,7 @@ declare namespace Nookipedia.Today {
     /**
      * The villager this birthday is for
      */
-    extraInfo: T extends keyof extraInfo ? extraInfo[T] : never;
+    extraInfo?: T extends keyof extraInfo ? extraInfo[T] : never;
   };
 
   /**
