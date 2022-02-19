@@ -40,4 +40,12 @@ declare namespace Nookipedia.Common {
    * @author Will 'Willster' Johnson (@willster277)
    */
   type SchemaExcludeDetails = string;
+
+  /**
+   * @dev add documentation
+   * @dev ensure there are no other event types
+   * @since 0.4.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
+  type EventType = "Birthday" | "Event" | "Nook Shopping" | "Recipes" | "Season" | "Shopping season";
 }

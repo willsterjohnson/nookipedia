@@ -8,6 +8,12 @@ declare namespace Nookipedia.Utils {
   type MaybeArray<T> = T | Array<T>;
   /**
    * @dev add documentation
+   * @since 0.4.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
+  type MaybePromise<T> = T | Promise<T>;
+  /**
+   * @dev add documentation
    * @since 0.3.0
    * @author Will 'Willster' Johnson (@willster277)
    */
