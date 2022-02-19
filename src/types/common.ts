@@ -39,12 +39,13 @@ declare namespace Nookipedia.Common {
    * @since 0.3.0
    * @author Will 'Willster' Johnson (@willster277)
    */
-  type ValidHour = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+  type SchemaExcludeDetails = string;
 
   /**
    * @dev add documentation
-   * @since 0.3.0
+   * @dev ensure there are no other event types
+   * @since 0.4.0
    * @author Will 'Willster' Johnson (@willster277)
    */
-  type SchemaExcludeDetails = string;
+  type EventType = "Birthday" | "Event" | "Nook Shopping" | "Recipes" | "Season" | "Shopping season";
 }

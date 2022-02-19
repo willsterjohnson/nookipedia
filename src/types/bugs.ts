@@ -28,12 +28,6 @@ declare namespace Nookipedia.Bug {
      */
     render_url: string;
     /**
-     * The time this bug can be caught.
-     *
-     * IMPORTANT: This doesn't appear to be sent by the API, though it is typed incase it's a Partial type.
-     */
-    time?: string;
-    /**
      * The location this bug may be found in.
      */
     location: string;

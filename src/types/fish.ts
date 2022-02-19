@@ -27,12 +27,6 @@ declare namespace Nookipedia.Fish {
      */
     render_url: string;
     /**
-     * The time this fish can be caught.
-     *
-     * IMPORTANT: This doesn't appear to be sent by the API, though it is typed incase it's a Partial type.
-     */
-    time?: string;
-    /**
      * The location this fish may be found in.
      */
     location: string;
