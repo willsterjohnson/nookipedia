@@ -107,6 +107,31 @@ export default class NookipediaClass {
       .join("&");
   }
 
+  /**
+   * @dev add in-house documentation
+   * @param {Nookipedia.Today.Schema} event
+   * @dev maintain union of extraInfo locations
+   * @param {{ [K in keyof Nookipedia.Today.extraInfo]: (date: Nookipedia.Today.Schema["date"]) => Nookipedia.Utils.MaybePromise<Nookipedia.Today.extraInfo[K]> }} assign
+   */
+  async #todayExtraInfo(
+    event: Nookipedia.Today.Schema,
+    assign: {
+      [K in keyof Nookipedia.Today.extraInfo]: (
+        event: Nookipedia.Today.Schema["event"],
+        date: [year: Nookipedia.Event.Year, month: Nookipedia.Month.Valid, date: Nookipedia.Month.Day],
+      ) => Nookipedia.Utils.MaybePromise<Nookipedia.Today.extraInfo[K]>;
+    },
+  ): Promise<void> {
+    for (const [key, value] of Object.entries(assign)) {
+      if (event.type === key) {
+        event.extraInfo = await value(
+          event.event,
+          event.date.split("-") as [Nookipedia.Event.Year, Nookipedia.Month.Valid, Nookipedia.Month.Day],
+        );
+      }
+    }
+  }
+
   // ############################################################################################################################
   // ############################################################################################################################
   // ########################################################## PUBLIC ##########################################################
@@ -141,22 +166,28 @@ export default class NookipediaClass {
 
   /**
    * @dev add documentation
-   * @template {Nookipedia.Utils.AwaitedReturn<NookipediaClass["bugs"] | NookipediaClass["fish"] | NookipediaClass["villagers"]>} ExpectedType
+   * @template {Array<Nookipedia.Villager.Schema> | Array<Nookipedia.Villager.SchemaNHDetails> | Nookipedia.Utils.MaybeArray<Nookipedia.Fish.Schema> | Nookipedia.Utils.MaybeArray<Nookipedia.Bug.Schema> | Array<Nookipedia.Event.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
    * @param {Promise<ExpectedType | Nookipedia.Error.EndpointError>} apiResponse
-   * @returns {Promise<Exclude<Awaited<ExpectedType>, Nookipedia.Error.EndpointError>>}
+   * @returns {Promise<ExpectedType>}
    * @since 0.1.0
    * @author Will 'Willster' Johnson (@willster277)
    */
   async checkErrors<
-    ExpectedType extends Nookipedia.Utils.AwaitedReturn<
-      NookipediaClass["bugs"] | NookipediaClass["fish"] | NookipediaClass["villagers"]
-    >,
-  >(
-    apiResponse: Promise<ExpectedType | Nookipedia.Error.EndpointError>,
-  ): Promise<Exclude<Awaited<ExpectedType>, Nookipedia.Error.EndpointError>> {
+    ExpectedType extends  // villagers
+      | Array<Nookipedia.Villager.Schema>
+      | Array<Nookipedia.Villager.SchemaNHDetails>
+      // fish
+      | Nookipedia.Utils.MaybeArray<Nookipedia.Fish.Schema>
+      // bugs
+      | Nookipedia.Utils.MaybeArray<Nookipedia.Bug.Schema>
+      // events
+      | Array<Nookipedia.Event.Schema>
+      // common
+      | Array<Nookipedia.Common.SchemaExcludeDetails>,
+  >(apiResponse: Promise<ExpectedType | Nookipedia.Error.EndpointError>): Promise<ExpectedType> {
     const out = await apiResponse;
     if ("title" in out) throw new Error(out.title + ": " + out.details);
-    return out as Exclude<Awaited<ExpectedType>, Nookipedia.Error.EndpointError>;
+    return out;
   }
 
   // ############################################################################################################################
@@ -183,19 +214,15 @@ export default class NookipediaClass {
   async villagers<
     ExpectedType extends Array<Nookipedia.Common.SchemaExcludeDetails> = Array<Nookipedia.Common.SchemaExcludeDetails>,
   >(filters?: Nookipedia.Villager.FilterExcludeDetails): Promise<ExpectedType | Nookipedia.Error.EndpointError>;
-  // type safety
-  async villagers<
-    ExpectedType extends
-      | Array<Nookipedia.Villager.Schema>
-      | Array<Nookipedia.Villager.SchemaNHDetails>
-      | Array<Nookipedia.Common.SchemaExcludeDetails> =
-      | Array<Nookipedia.Villager.Schema>
-      | Array<Nookipedia.Villager.SchemaNHDetails>
-      | Array<Nookipedia.Common.SchemaExcludeDetails>,
-  >(
-    filters?: Nookipedia.Villager.Filter | Nookipedia.Villager.FilterNHDetails | Nookipedia.Villager.FilterExcludeDetails,
-  ): Promise<ExpectedType | Nookipedia.Error.EndpointError>;
   // implementation
+  /**
+   * @dev add documentation
+   * @template {Array<Nookipedia.Villager.Schema> | Array<Nookipedia.Villager.SchemaNHDetails> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
+   * @param {Nookipedia.Villager.Filter | Nookipedia.Villager.FilterNHDetails | Nookipedia.Villager.FilterExcludeDetails} [filters]
+   * @returns {Promise<ExpectedType | Nookipedia.Error.EndpointError>}
+   * @since 0.1.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
   async villagers<
     ExpectedType extends
       | Array<Nookipedia.Villager.Schema>
@@ -241,14 +268,14 @@ export default class NookipediaClass {
   async fish<ExpectedType extends Array<Nookipedia.Common.SchemaExcludeDetails> = Array<Nookipedia.Common.SchemaExcludeDetails>>(
     filters?: Nookipedia.Fish.FilterExcludeDetails,
   ): Promise<ExpectedType | Nookipedia.Error.EndpointError>;
-  // type safety
-  async fish<
-    ExpectedType extends Nookipedia.Utils.MaybeArray<Nookipedia.Fish.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails> =
-      | Nookipedia.Utils.MaybeArray<Nookipedia.Fish.Schema>
-      | Array<Nookipedia.Common.SchemaExcludeDetails>,
-  >(
-    filters?: Nookipedia.Fish.FilterSingle | Nookipedia.Fish.FilterMany | Nookipedia.Fish.FilterExcludeDetails,
-  ): Promise<ExpectedType | Nookipedia.Error.EndpointError>;
+  /**
+   * @dev add documentation
+   * @template {Nookipedia.Utils.MaybeArray<Nookipedia.Fish.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
+   * @param {Nookipedia.Fish.FilterSingle | Nookipedia.Fish.FilterMany | Nookipedia.Fish.FilterExcludeDetails} [filters]
+   * @returns {ExpectedType | Nookipedia.Error.EndpointError>}
+   * @since 0.2.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
   // implementation
   async fish<
     ExpectedType extends Nookipedia.Utils.MaybeArray<Nookipedia.Fish.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails> =
@@ -281,14 +308,14 @@ export default class NookipediaClass {
   async bugs<ExpectedType extends Array<Nookipedia.Common.SchemaExcludeDetails> = Array<Nookipedia.Common.SchemaExcludeDetails>>(
     filters?: Nookipedia.Bug.FilterExcludeDetails,
   ): Promise<ExpectedType | Nookipedia.Error.EndpointError>;
-  // type safety
-  async bugs<
-    ExpectedType extends Nookipedia.Utils.MaybeArray<Nookipedia.Bug.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails> =
-      | Nookipedia.Utils.MaybeArray<Nookipedia.Bug.Schema>
-      | Array<Nookipedia.Common.SchemaExcludeDetails>,
-  >(
-    filters?: Nookipedia.Bug.FilterSingle | Nookipedia.Bug.FilterMany | Nookipedia.Bug.FilterExcludeDetails,
-  ): Promise<ExpectedType | Nookipedia.Error.EndpointError>;
+  /**
+   * @dev add documentation
+   * @template {Nookipedia.Utils.MaybeArray<Nookipedia.Bug.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
+   * @param {Nookipedia.Bug.FilterSingle | Nookipedia.Bug.FilterMany | Nookipedia.Bug.FilterExcludeDetails} [filters]
+   * @returns {Promise<ExpectedType | Nookipedia.Error.EndpointError>}
+   * @since 0.2.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
   // implementation
   async bugs<
     ExpectedType extends Nookipedia.Utils.MaybeArray<Nookipedia.Bug.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails> =
@@ -302,7 +329,21 @@ export default class NookipediaClass {
   }
 
   // async seaCreatures() {};
-  async events() {};
+
+  /**
+   * @dev add documentation
+   * @template {Array<Nookipedia.Event.Schema>} ExpectedType
+   * @param {Nookipedia.Event.Filter} [filters]
+   * @returns {Promise<ExpectedType | Nookipedia.Error.EndpointError>}
+   * @since 0.4.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
+  async events<ExpectedType extends Array<Nookipedia.Event.Schema> = Array<Nookipedia.Event.Schema>>(
+    filters?: Nookipedia.Event.Filter,
+  ): Promise<ExpectedType | Nookipedia.Error.EndpointError> {
+    const endpoint = "/nh/events?" + this.#bodyToParams(filters ?? {});
+    return await this.#fetch<ExpectedType | Nookipedia.Error.EndpointError>(endpoint);
+  }
   // async art() {};
   // async furniture() {};
   // async clothing() {};
@@ -319,5 +360,31 @@ export default class NookipediaClass {
   // ######################################################### ABSTRACT #########################################################
   // ############################################################################################################################
 
-  async today() {};
+  /**
+   * Get all of today's events, if any.
+   *
+   * If there is additional info about the event that can be fetched
+   * from elsewhere, it will be on the `extraInfo` property.
+   * @dev implement referencing, eg if type == "Birthday", add property `details` containing Villager.SchemaNHDetails
+   * @returns {Promise<Array<Nookipedia.Today.Schema>>}
+   */
+  async today(): Promise<Array<Nookipedia.Today.Schema>> {
+    let events: Array<Nookipedia.Today.Schema> = await this.checkErrors(this.events({ date: "today" }));
+    for (const event of events) {
+      await this.#todayExtraInfo(event, {
+        Birthday: async (name, [_, month, day]) =>
+          (
+            await this.checkErrors<[Nookipedia.Villager.SchemaNHDetails]>(
+              this.villagers({
+                name: name.split("'s")[0],
+                nhdetails: true,
+                birthday: day,
+                birthmonth: month,
+              }),
+            )
+          )[0],
+      });
+    }
+    return events;
+  }
 }
