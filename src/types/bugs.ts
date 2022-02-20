@@ -36,7 +36,7 @@ declare namespace Nookipedia.Bug {
      */
     rarity: Common.RarityLevel;
     /**
-     * TODO: what is this?
+     * Required number of bugs caught to unlock this bug.
      */
     total_catch: number;
     /**

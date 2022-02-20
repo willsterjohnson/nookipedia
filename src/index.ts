@@ -4,15 +4,12 @@ import fetch from "node-fetch";
 /**
  * @dev add documentation
  * @param {string} apiKey
- * @param {Nookipedia.Common.Config} [config={}]
- * @param {Nookipedia.Common.Config["baseURL"]} [config.baseURL]
- * @param {Nookipedia.Common.Config["apiVersion"]} [config.apiVersion]
- * @param {Nookipedia.Common.Config["logUrl"]} [config.logUrl]
+ * @param {Partial<Nookipedia.Common.Config>} [config={}]
  * @since 0.1.0
  * @author Will 'Willster' Johnson (@willster277)
  */
 export default class NookipediaClass {
-  constructor(apiKey: string, config: Nookipedia.Common.Config = {}) {
+  constructor(apiKey: string, config: Partial<Nookipedia.Common.Config> = {}) {
     this.#apiKey = apiKey;
     if (config.apiVersion) {
       if (/\d+\.\d+\.\d+/.test(config.apiVersion)) {
@@ -34,7 +31,6 @@ export default class NookipediaClass {
   // ######################################################### PRIVATE #########################################################
   // ###########################################################################################################################
   // ###########################################################################################################################
-
   /**
    * @dev add in-house documentation
    * @type {string}
@@ -144,25 +140,25 @@ export default class NookipediaClass {
 
   /**
    * @dev add documentation
-   * @type {string}
+   * @type {Nookipedia.Common.Config["baseURL"]}
    * @since 0.1.0
    * @author Will 'Willster' Johnson (@willster277)
    */
-  baseURL: string = "https://api.nookipedia.com/";
+  baseURL: Nookipedia.Common.Config["baseURL"] = "https://api.nookipedia.com/";
   /**
    * @dev add documentation
-   * @type {string}
+   * @type {Nookipedia.Common.Config["apiVersion"]}
    * @since 0.1.0
    * @author Will 'Willster' Johnson (@willster277)
    */
-  apiVersion: string = "1.5.0";
+  apiVersion: Nookipedia.Common.Config["apiVersion"] = "1.5.0";
   /**
    * @dev add documentation
-   * @type {boolean}
+   * @type {Nookipedia.Common.Config["logUrl"]}
    * @since 0.2.0
    * @author Will 'Willster' Johnson (@willster277)
    */
-  logUrl: boolean = false;
+  logUrl: Nookipedia.Common.Config["logUrl"] = false;
 
   /**
    * @dev add documentation

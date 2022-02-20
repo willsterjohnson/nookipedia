@@ -39,7 +39,7 @@ declare namespace Nookipedia.Fish {
      */
     rarity: Common.RarityLevel;
     /**
-     * TODO: what is this?
+     * Required number of fish caught to unlock this fish.
      */
     total_catch: number;
     /**

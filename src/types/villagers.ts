@@ -165,7 +165,6 @@ declare namespace Nookipedia.Villager {
     | "Pisces"
     | "pisces";
 
-  // TODO: more descriptive JSDoc
   /**
    * @dev add documentation
    * @since 0.3.0
@@ -208,7 +207,6 @@ declare namespace Nookipedia.Villager {
      * Villager's personality
      */
     personality: Personality;
-    // check this, are there any NB/other in the game?
     /**
      * Villager's gender
      */
@@ -255,7 +253,6 @@ declare namespace Nookipedia.Villager {
     appearances: Array<Game>;
   };
 
-  // TODO: more descriptive JSDoc
   /**
    * @dev add documentation
    * @since 0.3.0
