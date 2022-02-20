@@ -20,7 +20,9 @@ declare namespace Nookipedia.Today {
      */
     type: T;
     /**
-     * The villager this birthday is for
+     * Extra info on this event.
+     *
+     * For birthdays, contains the villager the event is for.
      */
     extraInfo?: T extends keyof extraInfo ? extraInfo[T] : never;
   };
