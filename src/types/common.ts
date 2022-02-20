@@ -6,9 +6,9 @@ declare namespace Nookipedia.Common {
    * @author Will 'Willster' Johnson (@willster277)
    */
   type Config = {
-    baseURL?: string;
-    apiVersion?: string;
-    logUrl?: boolean;
+    baseURL: string;
+    apiVersion: string;
+    logUrl: boolean;
   };
   /**
    * @dev add documentation
