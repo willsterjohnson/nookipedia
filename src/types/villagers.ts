@@ -174,7 +174,7 @@ declare namespace Nookipedia.Villager {
     /**
      * Villager's Nookipedia URL
      */
-    url: string;
+    url: Common.WikiUrl;
     /**
      * Villager's name
      */

@@ -10,7 +10,7 @@ declare namespace Nookipedia.Bug {
     /**
      * The URL to the Nookipedia page for this bug.
      */
-    url: string;
+    url: Common.WikiUrl;
     /**
      * The name of this bug.
      */

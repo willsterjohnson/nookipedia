@@ -9,7 +9,7 @@ declare namespace Nookipedia.Fish {
     /**
      * The URL to the Nookipedia page for this fish.
      */
-    url: string;
+    url: Common.WikiUrl;
     /**
      * The name of this fish.
      */
