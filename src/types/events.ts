@@ -27,7 +27,7 @@ declare namespace Nookipedia.Event {
     /**
      * This event's Nookipedia URL
      */
-    url: string;
+    url: Common.WikiUrl;
   };
 
   /**

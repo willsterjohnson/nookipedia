@@ -1,5 +1,6 @@
 /// <reference path="./appearance.ts" />
 /// <reference path="./bugs.ts" />
+/// <reference path="./clothing.ts" />
 /// <reference path="./common.ts" />
 /// <reference path="./errors.ts" />
 /// <reference path="./events.ts" />

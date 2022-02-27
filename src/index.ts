@@ -69,7 +69,9 @@ export default class NookipediaClass {
    * @since 0.1.0
    * @author Will 'Willster' Johnson (@willster277)
    */
-  async #fetch<ExpectedType extends Nookipedia.Utils.MaybeArray<Record<string, any>>>(endpoint: string): Promise<ExpectedType> {
+  async #fetch<ExpectedType extends Nookipedia.Utils.MaybeArray<Record<string, any>> | Array<string>>(
+    endpoint: string,
+  ): Promise<ExpectedType> {
     if (this.logUrl) {
       console.log(`\x1b[34m[Nookipedia]\x1b[0m Attempting to fetch data from: \x1b[32m${this.baseURL}${endpoint}\x1b[0m`);
     }
@@ -126,6 +128,25 @@ export default class NookipediaClass {
         );
       }
     }
+  }
+
+  /**
+   * @dev add documentation
+   * @template {Array<any>} ExpectedType
+   * @param {Record<string, string>} [filters]
+   * @returns {Promise<ExpectedType>}
+   * @since 0.5.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
+  #nhAllSingle<ExpectedType extends Nookipedia.Utils.MaybeArray<Record<string, any>> | Array<string>>(
+    name: string,
+    endpointName: string,
+    filters?: Record<string, any>,
+  ): Promise<ExpectedType | Nookipedia.Error.EndpointError> {
+    const endpoint = `/nh/${endpointName}${filters && name in filters ? `/${filters[name]}` : ""}?${this.#bodyToParams(
+      filters ?? {},
+    )}`;
+    return this.#fetch<ExpectedType | Nookipedia.Error.EndpointError>(endpoint);
   }
 
   // ############################################################################################################################
@@ -280,8 +301,7 @@ export default class NookipediaClass {
   >(
     filters?: Nookipedia.Fish.FilterSingle | Nookipedia.Fish.FilterMany | Nookipedia.Fish.FilterExcludeDetails,
   ): Promise<ExpectedType | Nookipedia.Error.EndpointError> {
-    const endpoint = `/nh/fish${filters && "fish" in filters ? `/${filters.fish}` : ""}?${this.#bodyToParams(filters ?? {})}`;
-    return await this.#fetch<ExpectedType | Nookipedia.Error.EndpointError>(endpoint);
+    return await this.#nhAllSingle<ExpectedType>("fish", "fish", filters);
   }
 
   /**
@@ -320,8 +340,7 @@ export default class NookipediaClass {
   >(
     filters?: Nookipedia.Bug.FilterSingle | Nookipedia.Bug.FilterMany | Nookipedia.Bug.FilterExcludeDetails,
   ): Promise<ExpectedType | Nookipedia.Error.EndpointError> {
-    const endpoint = `/nh/bugs${filters && "bug" in filters ? `/${filters.bug}` : ""}?${this.#bodyToParams(filters ?? {})}`;
-    return await this.#fetch<ExpectedType | Nookipedia.Error.EndpointError>(endpoint);
+    return await this.#nhAllSingle<ExpectedType>("bug", "bugs", filters);
   }
 
   // async seaCreatures() {};
@@ -342,7 +361,48 @@ export default class NookipediaClass {
   }
   // async art() {};
   // async furniture() {};
-  // async clothing() {};
+
+  /**
+   * @dev add documentation
+   * @template {Nookipedia.Utils.MaybeArray<Nookipedia.Bug.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
+   * @param {Nookipedia.Bug.FilterSingle | Nookipedia.Bug.FilterMany | Nookipedia.Bug.FilterExcludeDetails} [filters]
+   * @returns {Promise<ExpectedType | Nookipedia.Error.EndpointError>}
+   * @since 0.5.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
+  // get one clothing
+  async clothing<ExpectedType extends Nookipedia.Clothing.Schema = Nookipedia.Clothing.Schema>(
+    filters: Nookipedia.Clothing.FilterSingle,
+  ): Promise<ExpectedType | Nookipedia.Error.EndpointError>;
+  // get many clothing
+  async clothing<ExpectedType extends Array<Nookipedia.Clothing.Schema> = Array<Nookipedia.Clothing.Schema>>(
+    filters?: Nookipedia.Clothing.FilterMany,
+  ): Promise<ExpectedType | Nookipedia.Error.EndpointError>;
+  // get many clothing names only
+  async clothing<
+    ExpectedType extends Array<Nookipedia.Common.SchemaExcludeDetails> = Array<Nookipedia.Common.SchemaExcludeDetails>,
+  >(filters?: Nookipedia.Clothing.FilterExcludeDetails): Promise<ExpectedType | Nookipedia.Error.EndpointError>;
+  /**
+   * @dev add documentation
+   * @template {Nookipedia.Utils.MaybeArray<Nookipedia.Clothing.Schema> | Array<Nookipedia.Common.SchemaExcludeDetails>} ExpectedType
+   * @param {Nookipedia.Clothing.FilterSingle | Nookipedia.Clothing.FilterMany | Nookipedia.Clothing.FilterExcludeDetails} [filters]
+   * @returns {Promise<ExpectedType | Nookipedia.Error.EndpointError>}
+   * @since 0.5.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
+  // implementation
+  async clothing<
+    ExpectedType extends
+      | Nookipedia.Utils.MaybeArray<Nookipedia.Clothing.Schema>
+      | Array<Nookipedia.Common.SchemaExcludeDetails> =
+      | Nookipedia.Utils.MaybeArray<Nookipedia.Clothing.Schema>
+      | Array<Nookipedia.Common.SchemaExcludeDetails>,
+  >(
+    filters?: Nookipedia.Clothing.FilterSingle | Nookipedia.Clothing.FilterMany | Nookipedia.Clothing.FilterExcludeDetails,
+  ): Promise<ExpectedType | Nookipedia.Error.EndpointError> {
+    return await this.#nhAllSingle<ExpectedType>("clothing", "clothing", filters);
+  }
+
   // async interior() {};
   // async tools() {};
   // async photos() {};

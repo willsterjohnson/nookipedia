@@ -48,4 +48,11 @@ declare namespace Nookipedia.Common {
    * @author Will 'Willster' Johnson (@willster277)
    */
   type EventType = "Birthday" | "Event" | "Nook Shopping" | "Recipes" | "Season" | "Shopping season";
+
+  /**
+   * @dev add documentation
+   * @since 0.5.0
+   * @author Will 'Willster' Johnson (@willster277)
+   */
+  type WikiUrl<Page extends string = string> = `https://nookipedia.com/wiki/${Page}`;
 }
