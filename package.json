@@ -7,12 +7,13 @@
   "scripts": {
     "prettier:check": "prettier --ignore-path .prettierignore --check --plugin-search-dir=. .",
     "prettier:write": "prettier --ignore-path .prettierignore --write --plugin-search-dir=. .",
-    "package": "svelte-kit package && tsc -p ./tsconfig.declaration.json && node scripts/index.js && npm run prettier:write",
+    "package": "svelte-kit package && tsc -p ./tsconfig.declaration.json && node scripts/index.js && pnpm prettier:write",
     "test": "mocha --loader=ts-node/esm --experimental-specifier-resolution=node --timeout=30000 test/**/*.spec.ts",
-    "playground": "npm run package && node ./playground.js"
+    "playground": "pnpm package && node ./playground.js"
   },
   "": "Weird Dev Environment, right?",
   "devDependencies": {
+    "@beerstack/nope": "^0.0.2",
     "@sveltejs/kit": "next",
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.1.0",
