@@ -1,12 +1,11 @@
-/// <reference path="./appearance.ts" />
-/// <reference path="./bugs.ts" />
-/// <reference path="./clothing.ts" />
-/// <reference path="./common.ts" />
-/// <reference path="./errors.ts" />
-/// <reference path="./events.ts" />
-/// <reference path="./fish.ts" />
-/// <reference path="./month.ts" />
-/// <reference path="./today.ts" />
-/// <reference path="./utils.ts" />
-/// <reference path="./villagers.ts" />
-declare namespace Nookipedia {}
+export * as Appearance from "./appearance";
+export * as Bug from "./bugs";
+export * as Clothing from "./clothing";
+export * as Common from "./common";
+export * as Error from "./errors";
+export * as Event from "./events";
+export * as Fish from "./fish";
+export * as Month from "./month";
+export * as Today from "./today";
+export * as Utils from "./utils";
+export * as Villager from "./villager";

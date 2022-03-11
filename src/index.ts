@@ -1,4 +1,4 @@
-/// <reference path="./types/index.ts" />
+import type * as Nookipedia from "./types";
 import fetch from "node-fetch";
 
 /**
